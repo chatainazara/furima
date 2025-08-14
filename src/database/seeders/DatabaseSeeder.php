@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Favorite;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,8 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ItemsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(FavoritesTableSeeder::class);
+        //たくさん必要な時は下記factoryを使うこと
+        // Favorite::factory(50)->create();
         $this->call(CommentsTableSeeder::class);
         $this->call(BuysTableSeeder::class);
-        $this->call(LinksTableSeeder::class);
+        $this->call(CategoryItemTableSeeder::class);
     }
 }

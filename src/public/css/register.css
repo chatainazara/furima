@@ -1,6 +1,6 @@
 .register-form__content {
     display:block;
-    margin: 50px auto;
+    margin: 0px auto;
     padding: 30px 15px;
     width:680px;
     height:678px;
@@ -29,17 +29,21 @@
 
 .form__group {
     margin-bottom: 5px;
+    display: block;
 }
 
 .form__group-title {
     text-align: left;
+    display: block;
 }
 
 .form__label--item{
-        font-family: "Inter", sans-serif;
-        font-size: 24px;
-        font-weight: 400;
-        font-style: normal;
+    display:block;
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    margin:0 0;
 }
 
 .form__error {
@@ -54,7 +58,6 @@
     height: 40px;
     border: 1px solid #ddd;
     border-radius: 3px;
-
     appearance: none;
 }
 

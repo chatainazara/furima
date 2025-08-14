@@ -20,24 +20,61 @@
     <header class="header">
         <div class="header__inner">
             <div class="header-utilities">
-                <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
-                <nav>
-                    <ul class="header-nav">
-                        <li class="header-nav__search">
-                        </li>
-                        @if (Auth::check())
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="/mypage">マイページ</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <form class="form" action="/logout" method="post">
-                                @csrf
-                                <button class="header-nav__button">ログアウト</button>
-                            </form>
-                        </li>
-                        @endif
-                    </ul>
-                </nav>
+                <a class="header__link" href="/">
+                    <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
+                </a>
+                <ul class="header-nav">
+                    <!-- ログイン時 -->
+                    @if (Auth::check())
+                    <li class="header-nav__item-search">
+                        <form class="header-nav__search" action='/' method='post'>
+                            @csrf
+                            <input class="header-nav__search--window" type="text" name="search" placeholder="何かお探しですか？" value="{{$search}}"/>
+                            <button class="header-nav__search--button" type="submit">検索</button>
+                        </form>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/mypage">マイページ</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__logout" action="/logout" method="post">
+                            @csrf
+                            <button class="header-nav__logout--button">ログアウト</button>
+                        </form>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__listing" action="/sell" method="get">
+                            @csrf
+                            <button class="header-nav__listing--button">出品</button>
+                        </form>
+                    </li>
+                    @endif
+                    <!-- ログアウト時 -->
+                    @if (Auth::guest())
+                    <li class="header-nav__item-search">
+                        <form class="header-nav__search" action='/' method='post'>
+                            @csrf
+                            <input class="header-nav__search--window" type="text" name="search" placeholder="何かお探しですか？" value=""/>
+                            <button class="header-nav__search--button" type="submit">検索</button>
+                        </form>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/login">マイページ</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__logout" action="/login" method="get">
+                            @csrf
+                            <button class="header-nav__logout--button">ログイン</button>
+                        </form>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__listing" action="/login" method="get">
+                            @csrf
+                            <button class="header-nav__listing--button">出品</button>
+                        </form>
+                    </li>
+                    @endif
+                </ul>
             </div>
         </div>
     </header>

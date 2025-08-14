@@ -4,39 +4,39 @@
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
-@section('find')
-<form>
-    <input type="text" name="search" placeholder="何かお探しですか？"/>
-</form>
-@endsection
-
 @section('content')
-<div class="attendance__alert">
-  // メッセージ機能
-</div>
+<div class="content">
+    <div class="list-top">
+        <div class="list-top__inner">
+            <div class="list-top__link">
+                <p class="list-top__link-text">おすすめ</p>
+            </div>
+            <form class="list-top__form" action="/?tab=mylist" method="post">
+                @csrf
+                <input type="hidden" name="search" value="{{$search}}">
+                <button class="list-top__button" type="submit">マイリスト</button>
+            </form>
+        </div>
+    </div>
 
-<div class="attendance__content">
-  <div class="attendance__panel">
-    <form class="attendance__button">
-      <button class="attendance__button-submit" type="submit">勤務開始</button>
-    </form>
-    <form class="attendance__button">
-      <button class="attendance__button-submit" type="submit">勤務終了</button>
-    </form>
-  </div>
-  <div class="attendance-table">
-    <table class="attendance-table__inner">
-      <tr class="attendance-table__row">
-        <th class="attendance-table__header">名前</th>
-        <th class="attendance-table__header">開始時間</th>
-        <th class="attendance-table__header">終了時間</th>
-      </tr>
-      <tr class="attendance-table__row">
-        <td class="attendance-table__item">サンプル太郎</td>
-        <td class="attendance-table__item">サンプル</td>
-        <td class="attendance-table__item">サンプル</td>
-      </tr>
-    </table>
-  </div>
+    <div class="list">
+        @foreach($items as $item)
+        <div class="list__content">
+            <div class="list__content-img">
+                <a class="list__content--link" href="/item/{{$item['id']}}">
+                    <img class="list__content--pict" src="{{$item['pict_url']}}" alt="" />
+                </a>
+                @if($item['sold']  == 1)
+                <div class="list__content-img--attention" >
+                    <p class="list__content-img--attention-text" >sold</p>
+                </div>
+                @endif
+            </div>
+            <div class="list__content-explain">
+                <p class="list__content-text">{{$item['name']}}</p>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </div>
 @endsection

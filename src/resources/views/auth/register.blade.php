@@ -13,7 +13,7 @@
         @csrf
         <div class="form__group">
             <div class="form__group-title">
-                <span class="form__label--item">ユーザー名</span>
+                <h4 class="form__label--item">ユーザー名</h4>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
@@ -28,7 +28,7 @@
         </div>
         <div class="form__group">
             <div class="form__group-title">
-                <span class="form__label--item">メールアドレス</span>
+                <h4 class="form__label--item">メールアドレス</h4>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
@@ -43,7 +43,7 @@
         </div>
         <div class="form__group">
             <div class="form__group-title">
-                <span class="form__label--item">パスワード</span>
+                <h4 class="form__label--item">パスワード</h4>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
@@ -58,7 +58,7 @@
         </div>
         <div class="form__group">
             <div class="form__group-title">
-                <span class="form__label--item">確認用パスワード</span>
+                <h4 class="form__label--item">確認用パスワード</h4>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
