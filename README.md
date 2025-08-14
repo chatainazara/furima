@@ -21,11 +21,20 @@ DB_PASSWORD=laravel_pass
 5.アプリケーションキーの作成
 php artisan key:generate
 
-7.マイグレーションの実行
+6.マイグレーションの実行
 php artisan migrate
 
-8.シーディングの実行
+7.シーディングの実行
 php artisan db:seed
+
+8.シンボリックリンクの作成
+php artisan storage:link
+
+###テストの実行
+1.テスト用マイグレーションの実行
+php artisan migrate:fresh --env=testing
+
+
 
 使用技術(実行環境)
 

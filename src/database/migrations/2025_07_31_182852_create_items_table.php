@@ -20,9 +20,9 @@ class CreateItemsTable extends Migration
             $table->string('pict_url');
             $table->string('brand_name');
             $table->integer('price');
-            $table->text('detail');
+            $table->string('detail');
             $table->string('condition');
-            $table->boolean('sold_condition');// 売れたら1,売れてなければ0
+            $table->boolean('sold');// 売れたら1,売れてなければ0
             $table->timestamps();
         });
     }

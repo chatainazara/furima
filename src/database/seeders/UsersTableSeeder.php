@@ -45,7 +45,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('tedateda'),
         ];
         DB::table('users')->insert($param);
-            $param = [
+        $param = [
             'name' => 'リキッダ',
             'email' => 'rikida@sakamaki-forest.com',
             'password' => Hash::make('rikidarikida'),
