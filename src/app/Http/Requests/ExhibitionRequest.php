@@ -25,7 +25,7 @@ class ExhibitionRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'pict_url' => 'required|mimes:jpeg,png',
+            // 'pict_url' => 'required|mimes:jpeg,png',
             'price' => 'required|integer|min:1',
             'detail' => 'required||max:255',
             'condition' =>'required',

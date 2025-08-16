@@ -39,7 +39,7 @@
                     <div class="form__group-content">
                         <div class="form__input--cate">
                             @foreach($categories as $category)
-                            <input class="form__input--cate-checkbox" type="checkbox" name="categories[]" id="{{$category['content']}}" value="{{$category['id']}}" />
+                            <input class="form__input--cate-checkbox" type="checkbox" name="categories[{{$category['id']}}]" id="{{$category['content']}}" value="{{$category['id']}}" @if(old("categories.$category[id]") == $category['id']) checked @endif/>
                             <label class="form__input--cate-label" for="{{$category['content']}}">{{$category['content']}}</label>
                             @endforeach
                         </div>
@@ -58,10 +58,10 @@
                     <div class="form__group-content">
                         <select class="form__input--select" name="condition" required>
                             <option value="" disabled selected>選択してください</option>
-                            <option value="良好">良好</option>
-                            <option value="目立った傷や汚れなし" >目立った傷や汚れなし</option>
-                            <option value="やや傷や汚れあり" >やや傷や汚れあり</option>
-                            <option value="状態が悪い" >状態が悪い</option>
+                            <option value="良好" @if( old('condition') === '良好' ) selected @endif>良好</option>
+                            <option value="目立った傷や汚れなし" @if( old('condition') === '目立った傷や汚れなし' ) selected @endif>目立った傷や汚れなし</option>
+                            <option value="やや傷や汚れあり" @if( old('condition') === 'やや傷や汚れあり' ) selected @endif>やや傷や汚れあり</option>
+                            <option value="状態が悪い" @if( old('condition') === '状態が悪い' ) selected @endif>状態が悪い</option>
                         </select>
                         <div class="form__error">
                             @error('condition')
@@ -71,11 +71,12 @@
                     </div>
                 </div>
             </div>
+
             <!-- 商品名と説明 -->
-            <div>
-            <h3>商品名と説明</h3>
+            <div class="form__group">
+            <h3 class="form__group-title">商品名と説明</h3>
                 <!-- 商品名 -->
-                <div class="form__group">
+                <div class="form__group-inner">
                     <div class="form__group-title">
                         <h4 class="form__label--item">商品名</h4>
                     </div>
@@ -127,7 +128,7 @@
                     </div>
                     <div class="form__group-content">
                         <div class="form__input--text">
-                            <input type="text" name="price" value="&yen;{{old('price')}}" />
+                            <input type="text" name="price" value="{{old('price')}}" placeholder="¥" />
                         </div>
                         <div class="form__error">
                             @error('price')

@@ -54,27 +54,29 @@ class ItemController extends Controller
 
         public function sell_register(ExhibitionRequest $request){
             $form = $request->all();
-            $fileName = $request -> file('pict_url') -> getClientOriginalExtension();
+            // dd($form);
             $newid = Item::max('id') + 1;
+            $fileName = $request -> file('pict_url') -> getClientOriginalExtension();
             $request->file('pict_url')->storeAs('/public','item'.$newid.'.'.$fileName);
             $form['pict_url'] = 'storage/item'.$newid.'.'.$fileName;
-            $categories = $form['categories'];
+            $categories = array_values($form['categories']);
             // dd($categories);
             // dd($form);
             Item::create([
                 'user_id' => Auth::id(),
                 'name' => $form['name'],
-                'pict_url' => $form['pict_url'],
+                // 'pict_url' => $form['pict_url'],
+                'pict_url' => '',
                 'brand_name' => $form['brand_name'],
                 'price' => $form['price'],
                 'detail' => $form['detail'],
                 'condition' => $form['condition'],
                 'sold' => '0',
             ]);
-            foreach($categories as $category){
-                $category=Category::find($category);
-                $category->items()->attach($newid);
-            }
+            // foreach($categories as $category){
+            //     $category_single=Category::find($category);
+            //     $category_single->items()->attach($newid);
+            // }
             return redirect ('/');
         }
 }
