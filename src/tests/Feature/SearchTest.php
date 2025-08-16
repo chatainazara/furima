@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Database\Factories\ItemFactory;
 use Illuminate\Support\Collection;
 
+
+
 class SearchTest extends TestCase
 {
     /**
@@ -28,7 +30,7 @@ class SearchTest extends TestCase
         $number_user = 10;
         $number_item = 5;
         User::factory($number_user)
-        ->hasItems($number_item)
+        ->has(Item::factory()->count($number_item))
         ->create();
         Favorite::factory(round(($number_user-1)*$number_user*$number_item)/10+1)
         ->create();

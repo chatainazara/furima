@@ -16,7 +16,7 @@ class ProfileFactory extends Factory
     {
         return [
             'user_id'=> User::factory(),
-            'pict_url' => $this->faker->url(),
+            'pict_url' => $this->faker->imageUrl(),
             'post_code' => $this->faker->regexify('[1-9]{3}-[0-9]{4}'),
             'address' => $this->faker->address(),
             'building'=>$this->faker->secondaryAddress(),
