@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
 
 class Item extends Model
 {
@@ -38,4 +39,13 @@ class Item extends Model
         return $this->belongsToMany(Category::class,'category_item');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    public function buys()
+    {
+        return $this->hasMany('App\Models\Buy');
+    }
 }

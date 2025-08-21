@@ -25,24 +25,20 @@ class SellTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $user_number = 2;
         $this->artisan('db:seed', ['--class' => 'CategoriesTableSeeder']);
-        // $categories=Category::inRandomOrder()->take(3)->get();
-        User::factory(1)->create()
-        // ->has(Item::factory()->count(1),'items')
-        ;
-
-        // Item::factory($number)
-        // $categories = Category::all();
-        // dd($categories);
+        User::factory($user_number)->create();
     }
 
     public function test_database_has()
     {
-    // ログアウト状態を確認
-    $this->assertGuest();
-    // ログインする
-    $users = User::all();
-    // dd($users);
+        // 一人づつ出品する商品数
+        $item_number = 3;
+        // ログアウト状態を確認
+        $this->assertGuest();
+        // ログインする
+        $users = User::all();
+        // ユーザー一人ずつ検証
         foreach($users as $user){
             $loginData= [
                 'email' => $user->email,
@@ -56,37 +52,56 @@ class SellTest extends TestCase
             $response = $this->get('/sell');
             $response->assertViewIs('auth.sell');
             // 出品内容をコントローラーにポスト
-            $items=Item::factory()->make([
+            $items=Item::factory($item_number)->make([
                 'user_id'=> Auth::id(),
                 'sold' => 0
             ]);
-
-            $file = UploadedFile::fake()->image('test.jpeg');
-            $categories=Category::inRandomOrder()->take(3)->get()->toArray();
-
-            $response = $this->post('/sell',[
-                'categories' => $categories,
-                'condition'=> $items['condition'],
-                'name'=>$items['name'],
-                'brand_name'=>$items['brand_name'],
-                'detail'=>$items['detail'],
-                'price'=>$items['price'],
-                'pict_url'=>$file,
-            ]);
-
-            // 登録を確認
-            $this->assertDatabaseHas('items', [
-                'user_id' => $items['user_id'],
-                'pict_url' => $items['pict_url'],
-                'condition' => $items['condition'],
-                'name' => $items['name'],
-                'brand_name' => $items['brand_name'],
-                'detail' => $items['detail'],
-                'price' => $items['price'],
-                // 'sold' => $items['sold'],
-                'sold' => 0,
-            ]);
+            // 商品ひとつずつ検証
+            foreach($items as $item){
+                // 出品データの作成
+                $count=count(Category::all());
+                $categories=Category::inRandomOrder()->take(rand(1,$count))->pluck('id')->toArray();
+                // 画像の保存先を指定
+                Storage::Fake('public');
+                // 画像データを生成
+                $file = UploadedFile::fake()->image('test.jpg');
+                // データをポスト送信
+                $data = [
+                    'categories' => $categories,
+                    'condition' => $item['condition'],
+                    'name' => $item['name'],
+                    'brand_name' => $item['brand_name'],
+                    'detail' => $item['detail'],
+                    'price' => $item['price'],
+                    'pict_url' => $file,
+                    // 'pict_url' => $item['pict_url']
+                ];
+                $response = $this->post('/sell',$data);
+                // 登録したデータのidを取得
+                $newid = Item::max('id');
+                // アップロードしたファイルの拡張子
+                $fileName = $file -> getClientOriginalExtension();
+                // 期待される画像のパス
+                $path = 'storage/item'.$newid.'.'.$fileName;
+                // 商品情報の登録を期待
+                $this->assertDatabaseHas('items', [
+                    'user_id' => $item['user_id'],
+                    'pict_url' => $path,
+                    'condition' => $item['condition'],
+                    'name' => $item['name'],
+                    'brand_name' => $item['brand_name'],
+                    'detail' => $item['detail'],
+                    'price' => $item['price'],
+                    'sold' => 0,
+                ]);
+                // カテゴリーの登録を期待
+                foreach($categories as $category){
+                    $this->assertDatabaseHas('category_item', [
+                        'category_id' => $category,
+                        'item_id' => $newid,
+                    ]);
+                }
+            }
         }
     }
-
 }

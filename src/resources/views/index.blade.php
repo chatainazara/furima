@@ -23,9 +23,12 @@
         @foreach($items as $item)
         <div class="list__content">
             <div class="list__content-img">
-                <a class="list__content--link" href="/item/{{$item['id']}}">
-                    <img class="list__content--pict" src="{{$item['pict_url']}}" alt="" />
-                </a>
+                <form class="list__content--form" action="/item/{{$item['id']}}" method="get" >
+                    @csrf
+                    <button class="list__content--button" name="action" value="detail" type="submit">
+                        <img class="list__content--pict" src="{{$item['pict_url']}}" alt="" />
+                    </button>
+                </form>
                 @if($item['sold']  == 1)
                 <div class="list__content-img--attention" >
                     <p class="list__content-img--attention-text" >sold</p>

@@ -13,7 +13,7 @@ class CommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,25 @@ class CommentRequest extends FormRequest
      */
     public function rules()
     {
+
+        $rules = [
+            'content' => '',
+        ];
+
+        if($this->input('action')==='comment'){
+            $rules = [
+                'content' => 'required|max:255',
+            ];
+        }
+
+        return $rules;
+    }
+
+    public function messages()
+    {
         return [
-            //
+            'content.required' => 'コメントを入力してください',
+            'content.max' => 'コメントは255文字以内で入力してください',
         ];
     }
 }
