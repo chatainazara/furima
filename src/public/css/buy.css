@@ -1,0 +1,228 @@
+
+/* チェックボックス */
+.form__input--cate {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #FF5655;
+}
+
+.form__input--cate-label {
+    display: flex;
+    background: #ffffff;
+    color: #FF5565;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    text-decoration: none;
+    border-radius: 30px;
+    border:1px solid #FF5655;
+    cursor: pointer;
+    height:32px;
+    align-items: center;
+}
+
+.form__input--cate-checkbox:checked+
+.form__input--cate-label {
+    background: #FF5655;
+    color: #FFF;
+}
+
+.form__input--cate-checkbox {
+    display: none;
+}
+/* チェックボックス終わり */
+
+/* セレクトボックス */
+.form__input--select {
+    appearance: none;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0 0;
+}
+
+/* .form__input--select select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+} */
+
+/* .form__input--select::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 5px 0 5px;
+    border-color: #333 transparent transparent transparent;
+} */
+
+/* .form__input--select select:focus {
+    outline: none;
+    border-color: #007bff;
+} */
+/* セレクトボックス終わり */
+
+
+.content{
+    display: block;
+    margin: 0px auto;
+    padding: 30px 15px;
+    width: 680px;
+    height: 678px;
+    text-align: center;
+}
+
+.content__top{}
+
+.content__top--title{
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.form{
+    border: 1px solid black;
+}
+
+.form__group{
+    border: 1px solid black;
+}
+
+.form__group-title{
+    /* display:inline-block; */
+    font-family: "Inter", sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    /* border: 4px solid rgb(14, 103, 235); */
+}
+
+.form__group-inner{}
+
+
+
+.form__group-content--img{
+    display:flex;
+        border: 1px solid black;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.form__img--item{
+    display:block;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border:1px solid black;
+    margin-right: 50px;
+}
+
+.form__input--button::file-selector-button {
+    width: 100px;
+    height: 40px;
+    opacity: 0;
+    position: relative;
+    display:block;
+    margin:auto auto;
+    margin-top: 75px; 
+    /* align-items: center;
+    text-align: center;
+    justify-content: center; */
+}
+
+.form__input--button::before {
+    position: absolute;
+    content: "画像を選択する";
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    color: rgb(248, 0, 0);
+    background: rgb(255, 255, 255);
+    font-size: 14px;
+    border-radius: 0.7em;
+    border:1px solid red;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    font-style: normal;
+    text-align: center;
+    align-items: center;
+    vertical-align: middle;
+    display: grid;
+    cursor: pointer;
+    margin-top:75px;
+}
+
+
+
+.form__label--item {
+    /* display:inline-block; */
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+    margin-left: 0px;
+    line-height: 0%;
+}
+
+.form__error {
+    height: 20px;
+    color: #ff0000;
+    text-align: left;
+}
+
+.form__input--text input {
+    padding: 0px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #6a7ff2;
+    border-radius: 3px;
+    appearance: none;
+    margin-bottom: 0px;
+}
+
+.form__button {
+    margin-top: 20px;
+}
+
+.form__button-submit {
+    padding: 10px;
+    width: 100%;
+    height: 65px;
+    border: none;
+    border-radius: 3px;
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    background: #FF5555;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.form__input--img {
+    display: inline-block;
+    border: 3px solid black;
+    height: 200px;
+    width: 60%;
+    background-color: #ffffff;
+}

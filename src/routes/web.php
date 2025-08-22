@@ -18,4 +18,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [ItemController::class, 'index']);
     Route::post('/',[ItemController::class,'search']);
-    Route::get('/item/{item_id}', [ItemController::class, 'item_detail']);
+    Route::get('/item/{item_id}', [ItemController::class, 'item_detail_view']);
+    Route::post('/item/{item_id}', [ItemController::class, 'item_detail']);
+    Route::get('/phpinfo', function(){return view('/phpinfo');});

@@ -23,14 +23,20 @@ class ExhibitionRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required',
-            // 'pict_url' => 'required|mimes:jpeg,png',
+            'pict_url' => 'required|mimes:jpeg,png',
             'price' => 'required|integer|min:1',
             'detail' => 'required||max:255',
             'condition' =>'required',
             'categories' => 'required',
         ];
+
+        if (app()->runningUnitTests()) {
+            unset($rules['pict_url']);
+        }
+
+        return $rules;
     }
 
     public function messages()

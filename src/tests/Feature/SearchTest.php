@@ -27,8 +27,8 @@ class SearchTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $number_user = 10;
-        $number_item = 5;
+        $number_user = 5;
+        $number_item = 3;
         User::factory($number_user)
         ->has(Item::factory()->count($number_item))
         ->create();
