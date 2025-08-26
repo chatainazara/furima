@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,21 +32,28 @@ class ItemFactory extends Factory
         ];
     }
 
-        public function configure()
+    public function configure()
     {
         return $this->afterCreating(function(Item $item){
-            $item_id = $item -> id;
-            // 画像の保存先を指定
-            Storage::Fake('public');
-            // ランダムな画像を生成
+            // ストレージを偽装（テスト用）
+            Storage::fake('public');
+
+            // ランダムな画像を生成して保存
             $file = UploadedFile::fake()->image('test.jpg');
-            // 拡張子を取得
-            $filename = $file -> getClientOriginalExtension();
-            // 擬似publicに保存
-            $file->storeAs('/public','item'.$item_id.'.'.$filename);
-            $item->pict_url='storage/item'.$item_id.'.'.$filename;
+            $filename = 'item'.$item->id.'.'.$file->getClientOriginalExtension();
+            // 実際に保存するときは下記のコメントアウトを外す
+            // $file->storeAs('public', $filename);
+
+            // URL を設定
+            $item->pict_url = 'storage/'.$filename;
             $item->save();
+
+            // カテゴリをランダムで付与
+            $count = Category::count();
+            if($count > 0){
+                $categories = Category::inRandomOrder()->take(rand(1, $count))->pluck('id');
+                $item->categories()->attach($categories);
+            }
         });
     }
-    
 }

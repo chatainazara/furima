@@ -18,7 +18,7 @@ class MylistTest extends TestCase
      *
      * @return void
      */
-    use DatabaseMigrations;
+    use DatabaseMigrations,WithFaker;
 
     protected function setUp(): void
     {
@@ -26,7 +26,11 @@ class MylistTest extends TestCase
         $number_user = 10;
         $number_item = 5;
         User::factory($number_user)
-        ->hasItems($number_item)
+        ->has(Item::factory()
+        ->state([
+            'sold' => $this->faker->boolean(100),
+            ])
+        ->count($number_item))
         ->create();
         Favorite::factory(round($number_user*$number_user*$number_item/10)+1)
         ->create();

@@ -43,7 +43,7 @@
         @foreach($items as $item)
         <div class="list__content">
             <div class="list__content-img">
-                <form class="list__content--form" action="/item/{{$item['id']}}" method="post" >
+                <form class="list__content--form" action="/item/{{$item['id']}}" method="get" >
                     @csrf
                     <button class="list__content--button" name="action" value="detail" type="submit">
                         <img class="list__content--pict" src="{{$item['pict_url']}}" alt="" />

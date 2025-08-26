@@ -58,7 +58,7 @@ class ProfileTest extends TestCase
         $users = User::all();
         // ユーザー一人ずつ検証
         foreach($users as $user){
-            $loginData= [
+                $loginData= [
                 'email' => $user->email,
                 'password' => 'password',
                 ];
