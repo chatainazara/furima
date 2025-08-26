@@ -37,11 +37,12 @@ class ProfileFactory extends Factory
             Storage::Fake('public');
             // ランダムな画像を生成
             $file = UploadedFile::fake()->image('test.jpg');
-            // 拡張子を取得
-            $filename = $file -> getClientOriginalExtension();
-            // 擬似publicに保存
-            $file->storeAs('/public','profile'.$profile_id.'.'.$filename);
-            $profile->pict_url='storage/profile'.$profile_id.'.'.$filename;
+            // 拡張子入りファイル名を作成
+            $filename = 'profile'.$profile->id.'.'.$file->getClientOriginalExtension();
+            // 実際に保存するときは下記のコメントアウトを外す
+            // $file->storeAs('public', $filename);
+            // pict_urlを更新
+            $profile->pict_url='storage/profile'.$filename;
             $profile->save();
         });
     }

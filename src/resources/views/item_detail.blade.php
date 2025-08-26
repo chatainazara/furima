@@ -131,19 +131,19 @@
                 </div>
             </div>
             @endforeach
-            @if(Auth::check())
             <form class="content__comment-form" action="/item/{{$item['id']}}" method="post">
             @csrf
                 <div class="content__comment-form--title">
                     商品へのコメント
                 </div>
                 <textarea class="content__comment-form--text" name="content" rows="12" cols="25"></textarea>
-                @error('content')
-                {{ $message }}
-                @enderror
+                    <div class="form__error">
+                    @error('content')
+                    {{ $message }}
+                    @enderror
+                    </div>
                 <button class="content__comment-form--button"type="submit" name="action" value="comment">コメントを送信する</button>
             </form>
-            @endif
         </div>
     </div>
 </div>

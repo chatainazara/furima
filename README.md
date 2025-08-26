@@ -4,7 +4,7 @@
 ###Dockerビルド
 1. git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 2. DockerDesktopアプリを立ち上げる
-  3.docker-compose up -d --build
+3. docker-compose up -d --build
 
 ###Laravel環境構築
 1. docker-compose exec php bash
@@ -30,11 +30,12 @@ php artisan db:seed
 8.シンボリックリンクの作成
 php artisan storage:link
 
-###テストの実行
+###テストの実行(これは記述不要かもしれない最後にチェック)
 1.テスト用マイグレーションの実行
 php artisan migrate:fresh --env=testing
 
-
+2.テスト用にDomCrawlerをインストール（composer.jsonに書き込まれるので、composer installで再現されるか）
+composer require --dev symfony/dom-crawler symfony/css-selector
 
 使用技術(実行環境)
 

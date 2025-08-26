@@ -181,6 +181,9 @@ class ItemController extends Controller
                     ]);
 
             case 'comment':
+                if (!auth()->check()) {
+                    return back();
+                }
                 $content = $request -> content;
                 Comment::create([
                     'item_id' => $item_id,

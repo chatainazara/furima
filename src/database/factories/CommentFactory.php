@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Comment;
+use App\Models\User;
+use App\Models\Item;
 
 class CommentFactory extends Factory
 {
@@ -23,11 +25,16 @@ class CommentFactory extends Factory
                 $id++;
             }
         }
+        $count = count($mix);
+        $fake_id = $this->faker->numberBetween(1,$count);
+        $key = array_search($fake_id, array_column($mix, "id"));
+        $userid = $mix[$key]['user_id'];
+        $itemid = $mix[$key]['item_id'];
 
         return [
-            'item_id' => ,
-            'user_id' => ,
-            'content' => ,
+            'user_id' => $userid,
+            'item_id' => $itemid,
+            'content' => $this->faker->sentence(),
         ];
     }
 }
