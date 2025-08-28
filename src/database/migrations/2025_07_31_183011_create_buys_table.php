@@ -18,6 +18,9 @@ class CreateBuysTable extends Migration
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('payment');
+            $table->string('destination_post_code')->nullable();
+            $table->string('destination_address')->nullable();
+            $table->string('destination_building')->nullable();
             $table->timestamps();
         });
     }

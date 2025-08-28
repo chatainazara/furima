@@ -33,20 +33,9 @@ class ProfileTest extends TestCase
         ->has(Item::factory()->count(10))
         ->create();
 
-        // 購入されている商品について購入者をランダムに作成
-        $items = Item::where('sold',1)->get();
-        $statuses = ['コンビニ払い', 'カード支払い'];
-        foreach($items as $item){
-            $remove_id = $item -> user_id;
-            $selected_users = User::whereNotIn('id',[$remove_id])->get();
-            $random_user_id = $selected_users->pluck('id')->random();
-            $payment = Arr::random($statuses);
-            Buy::create([
-                'item_id'=>$item['id'],
-                'user_id'=>$random_user_id,
-                'payment'=>$payment,
-            ]);
-        }
+        Buy::factory(3)
+        ->create();
+
     }
 
     public function test_profile_visible()

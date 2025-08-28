@@ -46,6 +46,6 @@ class Item extends Model
 
     public function buys()
     {
-        return $this->hasMany('App\Models\Buy');
+        return $this->hasOne('App\Models\Buy');
     }
 }

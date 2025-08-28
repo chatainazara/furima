@@ -77,13 +77,14 @@
                 </div>
             </div>
         </div>
-
-        <form class="content__buy" action="/item/{{$item['id']}}" method="post">
+        @if(!$buys->contains('item_id', $item['id']))
+        <form class="content__buy" action="/purchase/{{$item['id']}}?payment=none" method="get">
             @csrf
-            <button class="content__buy--button" type="submit" name="action" value="buy">
+            <button class="content__buy--button" type="submit">
                 購入手続きへ
             </button>
         </form>
+        @endif
 
         <div class="content__sub-title">
             <h3 class="content__sub-title--text">商品説明</h3>

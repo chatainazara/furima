@@ -29,7 +29,7 @@
                         <img class="list__content--pict" src="{{$item['pict_url']}}" alt="" />
                     </button>
                 </form>
-                @if($item['sold']  == 1)
+                @if($buys->contains('item_id', $item['id']))
                 <div class="list__content-img--attention" >
                     <p class="list__content-img--attention-text" >sold</p>
                 </div>

@@ -22,7 +22,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 15000,
             'detail' => 'スタイリッシュなデザインのメンズ腕時計',
             'condition' => '良好',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -33,7 +32,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 5000,
             'detail' => '高で信頼性の高いハードディスク',
             'condition' => '目立った傷や汚れなし',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -44,7 +42,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 300,
             'detail' => '新鮮な玉ねぎ 3束のセット',
             'condition' => 'やや傷や汚れあり',
-            'sold' => 1,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -55,7 +52,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 4000,
             'detail' => 'クラシックなデザインの革靴',
             'condition' => '状態が悪い',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -66,7 +62,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 45000,
             'detail' => '高性能なノートパソコン',
             'condition' => '良好',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -77,7 +72,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 8000,
             'detail' => '高音質のレコーディング用マイク',
             'condition' => '目立った傷や汚れなし',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -88,7 +82,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 3500,
             'detail' => 'おしゃれなショルダーバッグ',
             'condition' => 'やや傷や汚れあり',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -99,7 +92,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 500,
             'detail' => '使いやすいタンブラー',
             'condition' => '状態が悪い',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -110,7 +102,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 4000,
             'detail' => '手動のコーヒーミル',
             'condition' => '良好',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
         $param = [
@@ -121,7 +112,6 @@ class ItemsTableSeeder extends Seeder
             'price' => 2500,
             'detail' => '便利なメイクアップセット',
             'condition' => '目立った傷や汚れなし',
-            'sold' => 0,
         ];
         DB::table('items')->insert($param);
     }

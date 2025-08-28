@@ -92,7 +92,6 @@ class SellTest extends TestCase
                     'brand_name' => $item['brand_name'],
                     'detail' => $item['detail'],
                     'price' => $item['price'],
-                    'sold' => 0,
                 ]);
                 // カテゴリーの登録を期待
                 foreach($categories as $category){

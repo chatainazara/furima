@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Favorite;
 use App\Models\Category;
+use App\Models\Buy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use App\Http\Requests\ExhibitionRequest;
@@ -19,26 +20,32 @@ class ItemController extends Controller
     {
             $remove_items = Item::where('user_id',Auth::id())->get()->toArray();
             $items = Item::whereNotIn('id',Arr::pluck($remove_items,'id'))->get()->toArray();
-            return view('index',['items'=> $items,'search'=>""]);
+            $buys = Buy::all();
+            return view('index',[
+                'items' => $items,
+                'search' => "",
+                'buys' => $buys,
+            ]);
     }
 
     public function search(Request $request)
     {
         $tab = $request -> query('tab');
         // マイリストがクリックされたとき
+        $buys = Buy::all();
         if ($tab == 'mylist'){
             // お気に入りに登録したアイテムを抽出
             $favorites = Favorite::where('user_id',Auth::id())->get()->toArray();
             // アイテム全体からお気に入りを抽出し検索窓に入力した値で検索
             $items = Item::whereIn('id',Arr::pluck($favorites,'item_id'))->NameSearch($request->search)->get();
-            return view('index',['items'=> $items,'search'=>$request->search]);
+            return view('index',['items'=> $items,'search'=>$request->search,'buys' => $buys]);
         }else{
             // 通常の検索
             // 自分の出品したもののid取得
             $remove_items = Item::where('user_id',Auth::id())->get()->toArray();
             // 自分が出品した商品の除去及び名前による検索
             $items = Item::whereNotIn('id',Arr::pluck($remove_items,'id'))->NameSearch($request->search)->get()->toArray();
-            return view('index',['items'=> $items,'search'=>$request->search]);
+            return view('index',['items'=> $items,'search'=>$request->search,'buys' => $buys]);
         }
     }
 
@@ -69,7 +76,7 @@ class ItemController extends Controller
             'price' => $form['price'],
             'detail' => $form['detail'],
             'condition' => $form['condition'],
-            'sold' => '0',
+            // 'sold' => '0',
         ]);
         $categories = array_values($form['categories']);
         foreach($categories as $category){
@@ -85,6 +92,7 @@ class ItemController extends Controller
         $user_id = Auth::id();
         $favorites = Favorite::where('item_id',$item_id)->get();
         $favorites_count = count($favorites);
+        $buys = Buy::all();
         if ($favorites -> contains('user_id',$user_id)){
             $favorite = 'favorite';
         }else{
@@ -107,7 +115,8 @@ class ItemController extends Controller
             'favorites' => $favorites,
             'favorites_count' => $favorites_count,
             'favorite' => $favorite,
-            'search' => ''
+            'search' => '',
+            'buys' => $buys,
         ]);
     }
 
@@ -118,6 +127,7 @@ class ItemController extends Controller
         $user_id = Auth::id();
         $favorites = Favorite::where('item_id',$item_id)->get();
         $favorites_count = count($favorites);
+        $buys = Buy::all();
         if ($favorites -> contains('user_id',$user_id)){
             $favorite = 'favorite';
         }else{
@@ -162,7 +172,8 @@ class ItemController extends Controller
                     'favorites' => $favorites,
                     'favorites_count' => $favorites_count +1,
                     'favorite' => $favorite,
-                    'search' => ''
+                    'search' => '',
+                    'buys' => $buys,
                 ]);
 
             case 'un_favorite':
@@ -177,7 +188,8 @@ class ItemController extends Controller
                         'favorites' => $favorites,
                         'favorites_count' => $favorites_count -1,
                         'favorite' => $favorite,
-                        'search' => ''
+                        'search' => '',
+                        'buys' => $buys,
                     ]);
 
             case 'comment':
@@ -205,7 +217,8 @@ class ItemController extends Controller
                         'favorites' => $favorites,
                         'favorites_count' => $favorites_count,
                         'favorite' => $favorite,
-                        'search' => ''
+                        'search' => '',
+                        'buys' => $buys,
                     ]);
 
             // case 'buy':

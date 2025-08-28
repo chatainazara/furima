@@ -17,7 +17,19 @@ class BuysTableSeeder extends Seeder
         $param = [
             'item_id' => 5,
             'user_id' => 3,
-            'payment' => 'カード支払い',
+            'payment' => 'card',
+            'destination_post_code' => '111-1111',
+            'destination_address' => '北海道猿払市0-0-0',
+            'destination_building' => 'オウレンビル202',
+        ];
+        DB::table('buys')->insert($param);
+        $param = [
+            'item_id' => 3,
+            'user_id' => 6,
+            'payment' => 'convenience',
+            'destination_post_code' => '222-2222',
+            'destination_address' => '北海道浜頓別村0-0-0',
+            'destination_building' => 'リキッダビルディング1202',
         ];
         DB::table('buys')->insert($param);
     }

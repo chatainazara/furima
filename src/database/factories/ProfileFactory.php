@@ -22,10 +22,10 @@ class ProfileFactory extends Factory
             'pict_url' => '',
             'post_code' => $this->faker->regexify('[1-9]{3}-[0-9]{4}'),
             'address' => $this->faker->address(),
-            'building'=>$this->faker->secondaryAddress(),
-            'destination_post_code' => $this->faker->regexify('[1-9]{3}-[0-9]{4}'),
-            'destination_address' => $this->faker->address(),
-            'destination_building'=>$this->faker->secondaryAddress(),
+            'building' => $this->faker->secondaryAddress(),
+            // 'destination_post_code' => $this->faker->regexify('[1-9]{3}-[0-9]{4}'),
+            // 'destination_address' => $this->faker->address(),
+            // 'destination_building'=>$this->faker->secondaryAddress(),
         ];
     }
 

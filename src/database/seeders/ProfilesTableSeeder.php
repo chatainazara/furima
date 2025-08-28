@@ -20,9 +20,6 @@ class ProfilesTableSeeder extends Seeder
             'post_code' => '000-0000',
             'address' => '北海道千歳町0-0-0',
             'building' => '蓮花ハイツC棟302',
-            'destination_post_code' => '000-0000',
-            'destination_address' => '北海道千歳町0-0-0',
-            'destination_building' => '蓮花ハイツC棟302',
         ];
         DB::table('profiles')->insert($param);
         $param = [
@@ -31,9 +28,6 @@ class ProfilesTableSeeder extends Seeder
             'post_code' => '000-0000',
             'address' => '北海道由仁市0-0-0',
             'building' => 'グリーンエンジュA-202',
-            'destination_post_code' => '000-0000',
-            'destination_address' => '北海道由仁市0-0-0',
-            'destination_building' => 'グリーンエンジュA-202',
         ];
         DB::table('profiles')->insert($param);
         $param = [
@@ -42,9 +36,6 @@ class ProfilesTableSeeder extends Seeder
             'post_code' => '000-0000',
             'address' => '北海道神居町0-0-0',
             'building' => 'オウレン荘105',
-            'destination_post_code' => '000-0000',
-            'destination_address' => '北海道神居町0-0-0',
-            'destination_building' => 'オウレン荘105',
         ];
         DB::table('profiles')->insert($param);
         $param = [
@@ -53,9 +44,6 @@ class ProfilesTableSeeder extends Seeder
             'post_code' => '000-0000',
             'address' => '北海道新篠津市0-0-0',
             'building' => 'バンクスタワー407',
-            'destination_post_code' => '000-0000',
-            'destination_address' => '北海道新篠津市0-0-0',
-            'destination_building' => 'バンクスタワー407',
         ];
         DB::table('profiles')->insert($param);
         $param = [
@@ -64,9 +52,6 @@ class ProfilesTableSeeder extends Seeder
             'post_code' => '000-0000',
             'address' => '北海道音威子府区0-0-0',
             'building' => 'テーダスクエア231',
-            'destination_post_code' => '000-0000',
-            'destination_address' => '北海道音威子府区0-0-0',
-            'destination_building' => 'テーダスクエア231',
         ];
         DB::table('profiles')->insert($param);
             $param = [
@@ -75,9 +60,6 @@ class ProfilesTableSeeder extends Seeder
             'post_code' => '000-0000',
             'address' => '北海道国縫市0-0-0',
             'building' => 'リキッダセンター206',
-            'destination_post_code' => '000-0000',
-            'destination_address' => '北海道国縫市0-0-0',
-            'destination_building' => 'リキッダセンター206',
         ];
         DB::table('profiles')->insert($param);
     }
