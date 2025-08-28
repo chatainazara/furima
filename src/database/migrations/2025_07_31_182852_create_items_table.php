@@ -22,7 +22,8 @@ class CreateItemsTable extends Migration
             $table->integer('price');
             $table->string('detail');
             $table->string('condition');
-            $table->boolean('sold');// 売れたら1,売れてなければ0
+            // $table->boolean('sold');
+            // 売れたら1,売れてなければ0
             $table->timestamps();
         });
     }

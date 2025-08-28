@@ -42,22 +42,24 @@ class ProfileController extends Controller
         $user = User::find(Auth::id());
         $profile = Profile::where('user_id',Auth::id())->first();
         $items = Item::where('user_id',Auth::id())->get();
-        return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search]);
+        $buys = Buy::all();
+        return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search,'buys' => $buys]);
     }
 
     public function buyOrSell(Request $request){
         $tab = $request -> query('tab');
+        $buys = Buy::all();
         if($tab == 'buy'){
             $user = User::find(Auth::id());
             $profile = Profile::where('user_id',Auth::id())->first();
             $buy_id = Buy::where('user_id',Auth::id())->pluck('item_id')->toArray();
             $items = Item::whereIn('id',$buy_id)->get();
-            return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search]);
+            return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search,'buys' => $buys]);
         }else{
             $user = User::find(Auth::id());
             $profile = Profile::where('user_id',Auth::id())->first();
             $items = Item::where('user_id',Auth::id())->get();
-            return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search]);
+            return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search,'buys' => $buys]);
         }
     }
 

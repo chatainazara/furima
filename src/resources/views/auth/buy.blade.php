@@ -1,147 +1,133 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('buy/sell.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buy.css') }}">
 @endsection
 
 @section('content')
-<div class="content">
-    <div class="content__top">
-        <h2 class="content__top--title">商品の出品</h2>
-    </div>
-
-    <form class="form" action="/sell" method="post"  enctype="multipart/form-data" novalidate>
-    @csrf
-        <div>
-            <!-- 商品画像の選択 -->
-            <div class="form__group">
-                    <h4 class="form__label--item">
-                        商品画像
-                    </h4>
-                    <div class="form__input--img">
-                        <input class="form__input--button" type="file" name="pict_url" accept="image/png,image/jpeg" >
-                    </div>
-                    <div class="form__error">
-                        @error('pict_url')
-                        {{ $message }}
-                        @enderror
-                    </div>
+<div class="entire">
+    <!-- 画面左側 -->
+    <div class="inform">
+        <!-- 上段の商品部分 -->
+        <div class="content">
+            <!-- 商品画像 -->
+            <div class="content-inner">
+                <img class="content__img" src="{{asset($item['pict_url'])}}" alt="" style="width:100%;"/>
             </div>
 
-            <!-- 商品の詳細 -->
-            <div class="form__group">
-            <h3 class="form__group-title">商品の詳細</h3>
-                <!-- カテゴリー -->
-                <div class="form__group-inner">
-                    <div class="form__group-title">
-                        <h4 class="form__label--item">カテゴリー</h4>
-                    </div>
-                    <div class="form__group-content">
-                        <div class="form__input--cate">
-                            @foreach($categories as $category)
-                            <input class="form__input--cate-checkbox" type="checkbox" name="categories[{{$category['id']}}]" id="{{$category['content']}}" value="{{$category['id']}}" @if(old("categories.$category[id]") == $category['id']) checked @endif/>
-                            <label class="form__input--cate-label" for="{{$category['content']}}">{{$category['content']}}</label>
-                            @endforeach
-                        </div>
-                        <div class="form__error">
-                            @error('categories')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
+            <!-- その他の情報 -->
+            <div class="content-inner">
+                <div class="content__title">
+                    <h2 class="content__title-text">{{$item->name}}</h2>
                 </div>
-                <!-- 商品の状態 -->
-                <div class="form__group">
-                    <div class="form__group-title">
-                        <h4 class="form__label--item">商品の状態</h4>
-                    </div>
-                    <div class="form__group-content">
-                        <select class="form__input--select" name="condition" required>
-                            <option value="" disabled selected>選択してください</option>
-                            <option value="良好" @if( old('condition') === '良好' ) selected @endif>良好</option>
-                            <option value="目立った傷や汚れなし" @if( old('condition') === '目立った傷や汚れなし' ) selected @endif>目立った傷や汚れなし</option>
-                            <option value="やや傷や汚れあり" @if( old('condition') === 'やや傷や汚れあり' ) selected @endif>やや傷や汚れあり</option>
-                            <option value="状態が悪い" @if( old('condition') === '状態が悪い' ) selected @endif>状態が悪い</option>
-                        </select>
-                        <div class="form__error">
-                            @error('condition')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 商品名と説明 -->
-            <div class="form__group">
-            <h3 class="form__group-title">商品名と説明</h3>
-                <!-- 商品名 -->
-                <div class="form__group-inner">
-                    <div class="form__group-title">
-                        <h4 class="form__label--item">商品名</h4>
-                    </div>
-                    <div class="form__group-content">
-                        <div class="form__input--text">
-                            <input type="text" name="name" value="{{old('name')}}" />
-                        </div>
-                        <div class="form__error">
-                            @error('name')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <!-- ブランド名 -->
-                <div class="form__group">
-                    <div class="form__group-title">
-                        <h4 class="form__label--item">ブランド名</h4>
-                    </div>
-                    <div class="form__group-content">
-                        <div class="form__input--text">
-                            <input type="text" name="brand_name" value="{{old('brand_name')}}" />
-                        </div>
-                    </div>
-                    <div class="form__error">
-                        <!-- バリデーションはここに入れる -->
-                    </div>
-                </div>
-                <!-- 商品の説明 -->
-                <div class="form__group">
-                    <div class="form__group-title">
-                        <h4 class="form__label--item">商品の説明</h4>
-                    </div>
-                    <div class="form__group-content">
-                        <div class="form__input--text">
-                            <input type="text" name="detail" value="{{old('detail')}}" />
-                        </div>
-                        <div class="form__error">
-                            @error('detail')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <!-- 価格 -->
-                <div class="form__group">
-                    <div class="form__group-title">
-                        <h4 class="form__label--item">価格</h4>
-                    </div>
-                    <div class="form__group-content">
-                        <div class="form__input--text">
-                            <input type="text" name="price" value="{{old('price')}}" placeholder="¥" />
-                        </div>
-                        <div class="form__error">
-                            @error('price')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="form__button">
-                    <button class="form__button-submit" type="submit">出品する</button>
+                <div class="content__price">
+                    <p class="subscript">¥</p>
+                    <p class="main-text"><?php echo number_format($item->price,0); ?></p>
                 </div>
             </div>
         </div>
-    </form>
+
+        <!-- 中段の支払い部分 -->
+        <div class="payment">
+            <div class="payment__title">
+                <h3 class="payment__title--text">支払い方法</h3>
+            </div>
+
+            <form class="payment__method" method="post" action="/purchase/address/{{ $item->id }}">
+            @csrf
+                @isset($destination_post_code)
+                <input type="hidden" name="destination_post_code" value="{{$destination_post_code}}"/>
+                <input type="hidden" name="destination_address" value="{{$destination_address}}"/>
+                <input type="hidden" name="destination_building" value="{{$destination_building}}"/>
+                @else
+                <input type="hidden" name="destination_post_code" value="{{$user->profile->post_code}}"/>
+                <input type="hidden" name="destination_address" value="{{$user->profile->address}}"/>
+                <input type="hidden" name="destination_building" value="{{$user->profile->building}}"/>
+                @endisset
+
+                <select class="payment__method" name="payment" onchange="this.form.submit()">
+                    <option value="none" {{ $payment === 'none' ? 'selected' : '' }} disabled selected>選択してください</option>
+                    <option value="convenience" {{ $payment === 'convenience' ? 'selected' : '' }}>コンビニ払い</option>
+                    <option value="card" {{ $payment === 'card' ? 'selected' : '' }}>カード払い</option>
+                </select>
+                <div class="form__error">
+                @error('payment')
+                {{ $message }}
+                @enderror
+                </div>
+            </form>
+        </div>
+
+        <!-- 下段の住所部分 -->
+        <div class="destination">
+            <div class="destination__header">
+                <div class=destination__title>
+                    <h3 class="destination__title--text">配送先</h3>
+                </div>
+                <form class="destination__form" action="/purchase/address/{{$item->id}}" method="get">
+                    <input type="hidden" name="payment" value="{{$payment}}">
+                    <button class="destination__form--button" type="submit">変更する</button>
+                </form>
+            </div>
+
+            <div class="destination__content">
+                @isset($destination_post_code)
+                <div class="destination__content-post">{{$destination_post_code}}</div>
+                <div class="destination__content-address">{{$destination_address}}</div>
+                <div class="destination__content-build">{{$destination_building}}</div>
+                @else
+                <div class="destination__content-post">{{$user->profile->post_code}}</div>
+                <div class="destination__content-address">{{$user->profile->address}}</div>
+                <div class="destination__content-build">{{$user->profile->building}}</div>
+                @endisset
+            </div>
+        </div>
+    </div>
+
+    <!-- 画面右側 -->
+    <div class="confirm">
+        <div class="confirm__inner">
+            <div class="confirm__title">
+                <h3 class="confirm__title--text">
+                    商品代金
+                </h3>
+            </div>
+            <div class="confirm__content">
+                <p class="subscript">¥</p>
+                <p class="main-text"><?php echo number_format($item->price,0); ?></p>
+            </div>
+        </div>
+        <div class="confirm__inner">
+            <div class="confirm__title">
+                <h3 class="confirm__title--text">
+                    支払い方法
+                </h3>
+            </div>
+            <div class="confirm__content">
+                @if ($payment === 'card')
+                    <p class="main-text">カード払い</p>
+                @else
+                    <p class="main-text">コンビニ払い</p>
+                @endif
+            </div>
+        </div>
+        <form class="purchase__form" action="/purchase" method="post">
+        @csrf
+            <input type="hidden" name="item_id" value="{{$item->id}}"/>
+            <input type="hidden" name="payment" value="{{$payment}}"/>
+            @isset($destination_post_code)
+            <input type="hidden" name="destination_post_code" value="{{$destination_post_code}}"/>
+            <input type="hidden" name="destination_address" value="{{$destination_address}}"/>
+            <input type="hidden" name="destination_building" value="{{$destination_building}}"/>
+            @else
+            <input type="hidden" name="destination_post_code" value="{{$user->profile->post_code}}"/>
+            <input type="hidden" name="destination_address" value="{{$user->profile->address}}"/>
+            <input type="hidden" name="destination_building" value="{{$user->profile->building}}"/>
+            @endisset
+            <button class="purchase__button" type="submit">
+                購入する
+            </button>
+        </form>
+    </div>
 </div>
 @endsection

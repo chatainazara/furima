@@ -13,6 +13,11 @@ class Buy extends Model
         'id',
         'user_id',
         'item_id',
-        'payment'
+        'payment',
+        'destination_post_code',
+        'destination_address',
+        'destination_building',
     ];
+
+    
 }

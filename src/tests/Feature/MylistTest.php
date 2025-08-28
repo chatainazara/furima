@@ -8,6 +8,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\User;
 use App\Models\Item;
+use App\Models\Buy;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,22 +24,28 @@ class MylistTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $number_user = 10;
-        $number_item = 5;
+        $number_user = 3;
+        $number_item = 3;
         User::factory($number_user)
         ->has(Item::factory()
-        ->state([
-            'sold' => $this->faker->boolean(100),
-            ])
-        ->count($number_item))
+        // ->state([
+        //     'sold' => $this->faker->boolean(100),
+        //     ])
+            ->count($number_item))
         ->create();
+
         Favorite::factory(round($number_user*$number_user*$number_item/10)+1)
         ->create();
+
+        Buy::factory(9)
+        ->create();
+
+        $buys=Buy::all()->toArray();
     }
 
 
     public function test_favorite(){
-        $this->assertDatabaseCount('favorites', 51);
+        $this->assertDatabaseCount('favorites',4);
     }
 
     public function test_favorite_item_visible(){

@@ -28,7 +28,7 @@ class ItemFactory extends Factory
             'price' => $this->faker->numberBetween(1000, 100000),
             'detail' => $this->faker->sentence(),
             'condition' => $this->faker->randomElement($statuses),
-            'sold' => $this->faker->boolean(50),
+            // 'sold' => $this->faker->boolean(50),
         ];
     }
 

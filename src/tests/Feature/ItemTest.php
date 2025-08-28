@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\User;
 use App\Models\Item;
+use App\Models\Buy;
 
 class ItemTest extends TestCase
 {
@@ -23,15 +24,18 @@ class ItemTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        User::factory(10)
+        User::factory(2)
         ->hasItems(5)
+        ->create();
+
+        Buy::factory(10)
         ->create();
     }
 
     public function test_all_item_visible()
     {
         $items = Item::All();
-        $this->assertDatabaseCount('items', 50);
+        $this->assertDatabaseCount('items', 10);
         $response = $this->get('/');
         $response->assertStatus(200);
         foreach ($items as $item) {
