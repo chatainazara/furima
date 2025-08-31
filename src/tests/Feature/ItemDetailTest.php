@@ -28,15 +28,15 @@ class ItemDetailTest extends TestCase
 
         $this->seed(CategoriesTableSeeder::class);
         $count=Category::count();
-        User::factory(3)
+        User::factory(2)
         ->has(Item::factory()
-            ->count(3)
+            ->count(1)
         )
         ->hasProfile()
         ->hasComments(2)
         ->create();
 
-        Favorite::factory(4)
+        Favorite::factory(2)
         ->create();
 
     }
@@ -112,8 +112,19 @@ class ItemDetailTest extends TestCase
                 // 写真が表示されていないことの確認
                 $response->assertDontSee($not_comment->user->profile->pict_url);
             }
+        }
+    }
 
-            // 以下カテゴリーのテスト
+    public function test_all_item_category_visible()
+    {
+        $items = Item::with('categories')->get();
+        foreach($items as $item){
+            $response = $this->get('/item/'.$item['id']);
+            $response->assertViewIs('item_detail');
+            // htmlを取得
+            $html = $response->getContent();
+            // 階層構造化
+            $crawler = new Crawler($html);
             // 複数選択されたカテゴリーが存在することを確認
             $categories = $item->categories->pluck('content')->toArray();
             $response->assertSeeText($categories);

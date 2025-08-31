@@ -28,8 +28,6 @@ class PurchaseController extends Controller
     }
 
     public function destinationOrPaymentChange(AddressRequest $request,$item_id){
-        // dd($request);
-
         $item = Item::find($item_id);
         $user = User::with('profile')->find(Auth::id());
         $payment = $request->payment;
@@ -41,7 +39,6 @@ class PurchaseController extends Controller
     }
 
     public function purchase(PurchaseRequest $request){
-        // dd($request);
         Buy::create([
             'user_id' => Auth::id(),
             'item_id' => $request->item_id,

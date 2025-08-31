@@ -74,7 +74,6 @@ class SellTest extends TestCase
                     'detail' => $item['detail'],
                     'price' => $item['price'],
                     'pict_url' => $file,
-                    // 'pict_url' => $item['pict_url']
                 ];
                 $response = $this->post('/sell',$data);
                 // 登録したデータのidを取得

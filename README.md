@@ -1,44 +1,61 @@
 # Furima
 
-##環境構築
-###Dockerビルド
-1. git clone git@github.com:estra-inc/confirmation-test-contact-form.git
-2. DockerDesktopアプリを立ち上げる
-3. docker-compose up -d --build
+## 環境構築
 
-###Laravel環境構築
-1. docker-compose exec php bash
-2. composer install
-3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.envファイルを作成
-4. .envに以下の環境変数を追加
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel_db
-DB_USERNAME=laravel_user
-DB_PASSWORD=laravel_pass
+### Docker ビルド
 
-5.アプリケーションキーの作成
-php artisan key:generate
+    1. git clone git@github.com:chatainazara/furima.git
+    2. DockerDesktop アプリを立ち上げる
+    3. docker-compose up -d --build
 
-6.マイグレーションの実行
-php artisan migrate
+### Laravel 環境構築
 
-7.シーディングの実行
-php artisan db:seed
+    1. docker-compose exec php bash
 
-8.シンボリックリンクの作成
-php artisan storage:link
+    2. composer install
 
-###テストの実行(これは記述不要かもしれない最後にチェック)
-1.テスト用マイグレーションの実行
-php artisan migrate:fresh --env=testing
+    3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。
 
-2.テスト用にDomCrawlerをインストール（composer.jsonに書き込まれるので、composer installで再現されるか）
-composer require --dev symfony/dom-crawler symfony/css-selector
+    4. .envに以下の環境変数を追加
+        DB_CONNECTION=mysql
+        DB_HOST=mysql
+        DB_PORT=3306
+        DB_DATABASE=laravel_db
+        DB_USERNAME=laravel_user
+        DB_PASSWORD=laravel_pass
 
-使用技術(実行環境)
+    5. アプリケーションキーの作成
+        php artisan key:generate
 
-* PHP 8.1.33
-* Laravel 8.83.29
-* MySQL8.0.26
+    6. マイグレーションの実行
+        php artisan migrate
+
+    7. シーディングの実行
+        php artisan db:seed
+
+    8. シンボリックリンクの作成
+        php artisan storage:link
+
+### テストの実行
+
+    1. 本アプリのテストを一度に実行
+        vendor/bin/phpunit tests/Feature
+
+## 使用技術(実行環境)
+
+    PHP: 8.1.33
+    Laravel: 8.83.29
+    MySQL: 8.0.2
+    nginx: 1.21.1
+
+## ER 図
+
+    ![ER図](document/furima.drawio.svg)
+
+## URL
+
+### 開発環境
+
+    phpMyAdmin: http://localhost:8080
+    ユーザー登録: http://localhost/register
+    ホーム画面: http://localhost/
