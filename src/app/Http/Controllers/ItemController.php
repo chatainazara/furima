@@ -28,7 +28,7 @@ class ItemController extends Controller
             ]);
     }
 
-    public function search(Request $request)
+    public function searchAndMylist(Request $request)
     {
         $tab = $request -> query('tab');
         // マイリストがクリックされたとき
@@ -51,23 +51,15 @@ class ItemController extends Controller
 
     public function sell(){
         $categories = Category::All();
-        // return view('auth.sell')->with('search',"");
         return view('auth.sell',['categories' => $categories,'search' => ""]);
     }
 
-    public function sell_register(ExhibitionRequest $request){
+    public function sellRegister(ExhibitionRequest $request){
         $form = $request->all();
         $newid = Item::max('id') + 1;
-        // if($form['pict_url'] != ''){
             $fileName = $request -> file('pict_url') -> getClientOriginalExtension();
-            // dd($form);
             $request->file('pict_url')->storeAs('/public','item'.$newid.'.'.$fileName);
-            // dd($form);
             $form['pict_url'] = 'storage/item'.$newid.'.'.$fileName;
-        // }else{
-            // $form['pict_url'] = '';
-        // }
-        // dd($form);
         Item::create([
             'user_id' => Auth::id(),
             'name' => $form['name'],
@@ -76,7 +68,6 @@ class ItemController extends Controller
             'price' => $form['price'],
             'detail' => $form['detail'],
             'condition' => $form['condition'],
-            // 'sold' => '0',
         ]);
         $categories = array_values($form['categories']);
         foreach($categories as $category){
@@ -86,7 +77,7 @@ class ItemController extends Controller
         return redirect ('/');
     }
 
-    public function item_detail_view(Request $request){
+    public function itemDetailView(Request $request){
         $item_id = $request -> item_id;
         $item = Item::with('categories')->find($item_id);
         $user_id = Auth::id();
@@ -120,7 +111,7 @@ class ItemController extends Controller
         ]);
     }
 
-    public function item_detail(CommentRequest $request)
+    public function itemDetail(CommentRequest $request)
     {
         $item_id = $request -> item_id;
         $item = Item::with('categories')->find($item_id);
@@ -143,20 +134,6 @@ class ItemController extends Controller
         }
 
         switch ($request->input('action')) {
-
-            // case 'detail':
-            //     return view('item_detail',[
-            //         'item' => $item,
-            //         'user_id' => $user_id,
-            //         'comments' => $comments,
-            //         'comments_count' => $comments_count,
-            //         'comment' => $comment,
-            //         'favorites' => $favorites,
-            //         'favorites_count' => $favorites_count,
-            //         'favorite' => $favorite,
-            //         'search' => ''
-            //     ]);
-
             case 'favorite':
                 Favorite::create([
                     'item_id'=>$item_id,
@@ -220,17 +197,6 @@ class ItemController extends Controller
                         'search' => '',
                         'buys' => $buys,
                     ]);
-
-            // case 'buy':
-            //     return view('auth.buy',[
-            //         'item' => $item,
-            //         'search' => '',
-            //     ]);
         }
-
-
-
-
-
     }
 }

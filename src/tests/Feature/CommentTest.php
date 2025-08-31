@@ -25,7 +25,6 @@ class CommentTest extends TestCase
     {
         parent::setUp();
         $this->seed(CategoriesTableSeeder::class);
-        $count=Category::count();
         User::factory(2)
         ->has(Item::factory()
             ->count(1)

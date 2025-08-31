@@ -1,8 +1,7 @@
 .header {
     background: #000;
     height:80px;
-    border: 3px solid rgb(63, 218, 164);
-    /* position: fixed; */
+    /* border: 3px solid rgb(63, 218, 164); */
     width: 100%;
 }
 
@@ -10,13 +9,13 @@
     margin: 0 auto;
     height:100%;
     width:100%;
-    border: 3px solid rgb(201, 28, 175);
+    /* border: 3px solid rgb(201, 28, 175); */
 }
 
 .header-utilities {
     display: flex;
     justify-content: space-between;
-    border: 1px dotted rgb(72, 0, 255);
+    /* border: 1px dotted rgb(72, 0, 255); */
     align-items: center;
     height: 100%;
 }
@@ -26,14 +25,14 @@
     height:100%;
     line-height: 100%;
     align-items: center;
-    border: 3px dotted rgb(0, 255, 162);
+    /* border: 3px dotted rgb(0, 255, 162); */
 }
 
 .header__logo {
     display:inline-block;
     margin-left: 20px;
-    border: 1px solid red;
-    height: 80%;
+    /* border: 1px solid red; */
+    height: 70%;
 }
 
 .header-nav {
@@ -41,25 +40,27 @@
     justify-content: flex-end;
     height: 100%;
     width: 70%;
-    border:1px solid rgb(72, 0, 255);
+    /* border:1px solid rgb(72, 0, 255); */
     align-items: center;
 }
 
 .header-nav__item-search {
     display: inline-block;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 35%;
 }
 
 .header-nav__item {
     display:inline-block;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 15%;
     text-align: center;
     margin-right: 5px;
 }
 
-.header-nav__search {}
+.header-nav__search {
+    display:block;
+}
 
 .header-nav__search--window{
     display: inline-block;
@@ -75,7 +76,6 @@
 
 .header-nav__search--button{
     display: inline-block;
-    width: 20%;
     height: 60%;
     border: none;
     border-radius: 3px;
@@ -99,7 +99,10 @@
     cursor: pointer;
 }
 
-.header-nav__logout {}
+.header-nav__logout {
+    display:block;
+}
+
 .header-nav__logout--button {
     color: #fff;
     text-decoration: none;
@@ -110,9 +113,11 @@
     cursor: pointer;
 }
 
-.header-nav__listing {}
+.header-nav__listing {
+    display:block;
+}
+
 .header-nav__listing--button {
-    width: 40%;
     height: 60%;
     border: none;
     border-radius: 3px;

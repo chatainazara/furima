@@ -30,7 +30,7 @@ class ItemsTableSeeder extends Seeder
             'pict_url' => 'storage/item2.jpeg',
             'brand_name' => '西芝',
             'price' => 5000,
-            'detail' => '高で信頼性の高いハードディスク',
+            'detail' => '高速で信頼性の高いハードディスク',
             'condition' => '目立った傷や汚れなし',
         ];
         DB::table('items')->insert($param);
@@ -40,7 +40,7 @@ class ItemsTableSeeder extends Seeder
             'pict_url' => 'storage/item3.jpeg',
             'brand_name' => 'なし',
             'price' => 300,
-            'detail' => '新鮮な玉ねぎ 3束のセット',
+            'detail' => '新鮮な玉ねぎ3束のセット',
             'condition' => 'やや傷や汚れあり',
         ];
         DB::table('items')->insert($param);

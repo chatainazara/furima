@@ -50,12 +50,12 @@
                     <option value="convenience" {{ $payment === 'convenience' ? 'selected' : '' }}>コンビニ払い</option>
                     <option value="card" {{ $payment === 'card' ? 'selected' : '' }}>カード払い</option>
                 </select>
-                <div class="form__error">
+            </form>
+            <div class="form__error">
                 @error('payment')
                 {{ $message }}
                 @enderror
-                </div>
-            </form>
+            </div>
         </div>
 
         <!-- 下段の住所部分 -->
@@ -72,13 +72,13 @@
 
             <div class="destination__content">
                 @isset($destination_post_code)
-                <div class="destination__content-post">{{$destination_post_code}}</div>
-                <div class="destination__content-address">{{$destination_address}}</div>
-                <div class="destination__content-build">{{$destination_building}}</div>
+                <div class="destination__content-text">{{$destination_post_code}}</div>
+                <div class="destination__content-text">{{$destination_address}}</div>
+                <div class="destination__content-text">{{$destination_building}}</div>
                 @else
-                <div class="destination__content-post">{{$user->profile->post_code}}</div>
-                <div class="destination__content-address">{{$user->profile->address}}</div>
-                <div class="destination__content-build">{{$user->profile->building}}</div>
+                <div class="destination__content-text">{{$user->profile->post_code}}</div>
+                <div class="destination__content-text">{{$user->profile->address}}</div>
+                <div class="destination__content-text">{{$user->profile->building}}</div>
                 @endisset
             </div>
         </div>

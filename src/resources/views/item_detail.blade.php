@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        @if(!$buys->contains('item_id', $item['id']))
+        @if(!$buys->contains('item_id', $item['id']) && $item['user_id'] !== Auth::id())
         <form class="content__buy" action="/purchase/{{$item['id']}}?payment=none" method="get">
             @csrf
             <button class="content__buy--button" type="submit">
