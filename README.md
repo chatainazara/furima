@@ -50,7 +50,7 @@ vendor/bin/phpunit tests/Feature
 
 ## ER 図
 
-![ER図](document/er_diagram.png)
+![ER図](src/document/er_diagram.png)
 
 ## URL
 
