@@ -50,7 +50,7 @@
 
 ## ER 図
 
-    ![ER図](document/furima.drawio.svg)
+    ![ER図](document/ER図.png)
 
 ## URL
 
