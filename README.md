@@ -43,19 +43,19 @@ vendor/bin/phpunit tests/Feature
 
 ## 使用技術(実行環境)
 
-PHP: 8.1.33
-Laravel: 8.83.29
-MySQL: 8.0.2
-nginx: 1.21.1
+1. PHP: 8.1.33
+2. Laravel: 8.83.29
+3. MySQL: 8.0.2
+4. nginx: 1.21.1
 
 ## ER 図
 
-![ER図](document/ER図.png)
+![ER図](document/er_diagram.png)
 
 ## URL
 
 ### 開発環境
 
-phpMyAdmin: http://localhost:8080
-ユーザー登録: http://localhost/register
-ホーム画面: http://localhost/
+1. phpMyAdmin: http://localhost:8080
+2. ユーザー登録: http://localhost/register
+3. ホーム画面: http://localhost/
