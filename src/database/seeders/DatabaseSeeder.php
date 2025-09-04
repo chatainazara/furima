@@ -19,11 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(ProfilesTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
-        // Item::factory(5)->create();
         $this->call(CategoriesTableSeeder::class);
         $this->call(FavoritesTableSeeder::class);
-        //たくさん必要な時は下記factoryを使うこと
-        // Favorite::factory(50)->create();
         $this->call(CommentsTableSeeder::class);
         $this->call(BuysTableSeeder::class);
         $this->call(CategoryItemTableSeeder::class);

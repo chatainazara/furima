@@ -15,27 +15,27 @@ class FavoriteFactory extends Factory
      */
     public function definition()
     {
-        $user_ids = User::pluck('id')->all();
-        $item_ids = Item::select('id','user_id')->get()->toArray();
+        $userIds = User::pluck('id')->all();
+        $itemIds = Item::select('id','user_id')->get()->toArray();
         $mix=[];
         $id=1;
-        foreach($user_ids as $user_id){
-            foreach($item_ids as $item_id){
-                if($user_id !== $item_id['user_id']){
-                $mix[] = ['id'=>$id,'user_id'=>$user_id,'item_id'=>$item_id['id']];
+        foreach($userIds as $userId){
+            foreach($itemIds as $itemId){
+                if($userId !== $itemId['user_id']){
+                $mix[] = ['id'=>$id,'user_id'=>$userId,'item_id'=>$itemId['id']];
                 $id++;
                 }
             }
         }
-        $mix_id = array_column($mix,'id');
-        $count = count($mix_id);
-        $fake_id = $this->faker->unique()->numberBetween(1,$count);
-        $key = array_search($fake_id, array_column($mix, "id"));
-        $userid = $mix[$key]['user_id'];
-        $itemid = $mix[$key]['item_id'];
+        $mixId = array_column($mix,'id');
+        $count = count($mixId);
+        $fakeId = $this->faker->unique()->numberBetween(1,$count);
+        $key = array_search($fakeId, array_column($mix, "id"));
+        $userId = $mix[$key]['user_id'];
+        $itemId = $mix[$key]['item_id'];
         return [
-            'user_id' => $userid,
-            'item_id' => $itemid
+            'user_id' => $userId,
+            'item_id' => $itemId
         ];
     }
 }

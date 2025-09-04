@@ -19,36 +19,42 @@ class UsersTableSeeder extends Seeder
             'name' => 'レンゲ',
             'email' => 'renge@sakamaki-forest.com',
             'password' => Hash::make('rengerenge'),
+            'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'エンジュ',
             'email' => 'enju@sakamaki-forest.com',
             'password' => Hash::make('enjuenju'),
+            'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'オウレン',
             'email' => 'ouren@sakamaki-forest.com',
             'password' => Hash::make('ourenouren'),
+            'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'バンクス',
             'email' => 'banks@sakamaki-forest.com',
             'password' => Hash::make('banksbanks'),
+            'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'テーダ',
             'email' => 'teda@sakamaki-forest.com',
             'password' => Hash::make('tedateda'),
+            'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'リキッダ',
             'email' => 'rikida@sakamaki-forest.com',
             'password' => Hash::make('rikidarikida'),
+            'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
     }

@@ -26,7 +26,6 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|max:20',
             'email' => 'required|email|unique:users,email',
-            // 指示にないがエラー回避のためuniqueを追加
             'password' => 'required|confirmed|min:8',
         ];
     }
@@ -35,8 +34,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'お名前を入力してください',
-            // 'name.max' => 'お名前は20文字以内で入力してください',
-            // 上記は仕様にないためコメントアウト
+            'name.max' => 'お名前は20文字以内で入力してください',
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => 'メールアドレスはメール形式で入力してください',
             'email.unique' => 'すでに登録されています',

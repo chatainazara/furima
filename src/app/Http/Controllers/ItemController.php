@@ -42,16 +42,16 @@ class ItemController extends Controller
         }else{
             // 通常の検索
             // 自分の出品したもののid取得
-            $remove_items = Item::where('user_id',Auth::id())->get()->toArray();
+            $removeItems = Item::where('user_id',Auth::id())->get()->toArray();
             // 自分が出品した商品の除去及び名前による検索
-            $items = Item::whereNotIn('id',Arr::pluck($remove_items,'id'))->NameSearch($request->search)->get()->toArray();
+            $items = Item::whereNotIn('id',Arr::pluck($removeItems,'id'))->NameSearch($request->search)->get()->toArray();
             return view('index',['items'=> $items,'search'=>$request->search,'buys' => $buys]);
         }
     }
 
     public function sell(){
         $categories = Category::All();
-        return view('auth.sell',['categories' => $categories,'search' => ""]);
+        return view('auth.sell',['categories' => $categories]);
     }
 
     public function sellRegister(ExhibitionRequest $request){
@@ -78,20 +78,20 @@ class ItemController extends Controller
     }
 
     public function itemDetailView(Request $request){
-        $item_id = $request -> item_id;
-        $item = Item::with('categories')->find($item_id);
-        $user_id = Auth::id();
-        $favorites = Favorite::where('item_id',$item_id)->get();
-        $favorites_count = count($favorites);
+        $itemId = $request -> item_id;
+        $item = Item::with('categories')->find($itemId);
+        $userId = Auth::id();
+        $favorites = Favorite::where('item_id',$itemId)->get();
+        $favoritesCount = count($favorites);
         $buys = Buy::all();
-        if ($favorites -> contains('user_id',$user_id)){
+        if ($favorites -> contains('user_id',$userId)){
             $favorite = 'favorite';
         }else{
             $favorite = 'un_favorite';
         }
-        $comments = Comment::with(['user.profile'])->where('item_id',$item_id)->get();
-        $comments_count = count($comments);
-        if ($comments -> contains('user_id',$user_id)){
+        $comments = Comment::with(['user.profile'])->where('item_id',$itemId)->get();
+        $commentsCount = count($comments);
+        if ($comments -> contains('user_id',$userId)){
             $comment = 'comment';
         }else{
             $comment = 'un_comment';
@@ -99,12 +99,12 @@ class ItemController extends Controller
 
         return view('item_detail',[
             'item' => $item,
-            'user_id' => $user_id,
+            'user_id' => $userId,
             'comments' => $comments,
-            'comments_count' => $comments_count,
+            'comments_count' => $commentsCount,
             'comment' => $comment,
             'favorites' => $favorites,
-            'favorites_count' => $favorites_count,
+            'favorites_count' => $favoritesCount,
             'favorite' => $favorite,
             'search' => '',
             'buys' => $buys,
@@ -113,90 +113,91 @@ class ItemController extends Controller
 
     public function itemDetail(CommentRequest $request)
     {
-        $item_id = $request -> item_id;
-        $item = Item::with('categories')->find($item_id);
-        $user_id = Auth::id();
-        $favorites = Favorite::where('item_id',$item_id)->get();
-        $favorites_count = count($favorites);
+        $itemId = $request -> item_id;
+        $item = Item::with('categories')->find($itemId);
+        $userId = Auth::id();
+        $favorites = Favorite::where('item_id',$itemId)->get();
+        $favoritesCount = count($favorites);
         $buys = Buy::all();
-        if ($favorites -> contains('user_id',$user_id)){
+        if ($favorites -> contains('user_id',$userId)){
             $favorite = 'favorite';
         }else{
             $favorite = 'un_favorite';
         }
 
-        $comments = Comment::with(['user.profile'])->where('item_id',$item_id)->get();
-        $comments_count = count($comments);
-        if ($comments -> contains('user_id',$user_id)){
+        $comments = Comment::with(['user.profile'])->where('item_id',$itemId)->get();
+        $commentsCount = count($comments);
+        if ($comments -> contains('user_id',$userId)){
             $comment = 'comment';
         }else{
             $comment = 'un_comment';
         }
 
         switch ($request->input('action')) {
+            // いいね
             case 'favorite':
                 Favorite::create([
-                    'item_id'=>$item_id,
-                    'user_id'=>$user_id,
+                    'item_id'=>$itemId,
+                    'user_id'=>$userId,
                 ]);
                 $favorite = 'favorite';
                 return view('item_detail',[
                     'item' => $item,
-                    'user_id' => $user_id,
+                    'user_id' => $userId,
                     'comments' => $comments,
-                    'comments_count' => $comments_count,
+                    'comments_count' => $commentsCount,
                     'comment' => $comment,
                     'favorites' => $favorites,
-                    'favorites_count' => $favorites_count +1,
+                    'favorites_count' => $favoritesCount +1,
                     'favorite' => $favorite,
                     'search' => '',
                     'buys' => $buys,
                 ]);
-
+            // いいね解除
             case 'un_favorite':
-                Favorite::where('user_id',Auth::id())->where('item_id',$item_id)->delete();
+                Favorite::where('user_id',Auth::id())->where('item_id',$itemId)->delete();
                 $favorite = 'un_favorite';
                     return view('item_detail',[
                         'item' => $item,
-                        'user_id' => $user_id,
+                        'user_id' => $userId,
                         'comments' => $comments,
-                        'comments_count' => $comments_count,
+                        'comments_count' => $commentsCount,
                         'comment' => $comment,
                         'favorites' => $favorites,
-                        'favorites_count' => $favorites_count -1,
+                        'favorites_count' => $favoritesCount -1,
                         'favorite' => $favorite,
                         'search' => '',
                         'buys' => $buys,
                     ]);
-
+            // コメント投稿
             case 'comment':
                 if (!auth()->check()) {
                     return back();
                 }
                 $content = $request -> content;
                 Comment::create([
-                    'item_id' => $item_id,
-                    'user_id' => $user_id,
+                    'item_id' => $itemId,
+                    'user_id' => $userId,
                     'content' => $content
                 ]);
-                $comments = Comment::with(['user.profile'])->where('item_id',$item_id)->get();
-                if ($comments -> contains('user_id',$user_id)){
+                $comments = Comment::with(['user.profile'])->where('item_id',$itemId)->get();
+                if ($comments -> contains('user_id',$userId)){
                     $comment = 'comment';
                 }else{
                     $comment = 'un_comment';
                 }
-                    return view('item_detail',[
-                        'item' => $item,
-                        'user_id' => $user_id,
-                        'comments' => $comments,
-                        'comments_count' => $comments_count + 1,
-                        'comment' => $comment,
-                        'favorites' => $favorites,
-                        'favorites_count' => $favorites_count,
-                        'favorite' => $favorite,
-                        'search' => '',
-                        'buys' => $buys,
-                    ]);
+            return view('item_detail',[
+                'item' => $item,
+                'user_id' => $userId,
+                'comments' => $comments,
+                'comments_count' => $commentsCount + 1,
+                'comment' => $comment,
+                'favorites' => $favorites,
+                'favorites_count' => $favoritesCount,
+                'favorite' => $favorite,
+                'search' => '',
+                'buys' => $buys,
+            ]);
         }
     }
 }

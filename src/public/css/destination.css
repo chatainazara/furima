@@ -50,6 +50,10 @@
     height: 20px;
     color: #ff0000;
     text-align: left;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .form__input--text input {

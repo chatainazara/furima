@@ -15,39 +15,15 @@ class BuyFactory extends Factory
      */
     public function definition()
     {
-        // $mix=[];
-        // $id=1;
-        // $items = Item::all();
-        // foreach($items as $item){
-        //     $users = User::where('id','!=',$item->user_id)->get();
-        //     $mix[] = [
-        //         'id' => $id,
-        //         'item_id' => $item->id,
-        //         'user_id' => $users->random()->id,
-        //     ];
-        //     $id++;
-        // }
-
-
-        // $fake_id = $this->faker->unique()->numberBetween(1,Item::count());
-        // $key = array_search($fake_id, array_column($mix, "id"));
-        // $user_id = $mix[$key]['user_id'];
-        // $item_id = $mix[$key]['item_id'];
-
         // Itemのidリストをuniqueで使う
         $item_id = $this->faker->unique()->randomElement(Item::pluck('id')->toArray());
-
         // アイテムを取得
         $item = Item::find($item_id);
-
         // そのアイテムの持ち主以外のユーザーをランダムに取得
         $user = User::where('id', '!=', $item->user_id)
                     ->inRandomOrder()
                     ->first();
-
-
         $statuses = ['card', 'convenience'];
-
         return [
             'user_id' => $user->id,
             'item_id' => $item->id,

@@ -7,7 +7,7 @@
 @section('content')
 <div class="profile-form__content">
     <div class="profile-form__heading">
-        <h2 class="profile-form__title">プロフィール設定</h2>
+        <h1 class="profile-form__title">プロフィール設定</h1>
     </div>
     <form class="form" action="/mypage/profile" method="post"  enctype="multipart/form-data" novalidate>
     @csrf
@@ -34,11 +34,11 @@
         <!-- ユーザー名 -->
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">ユーザー名</h4>
+                <h2 class="form__label--item">ユーザー名</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="name" value="{{Auth::user() -> name}}" />
+                    <input class="text" type="text" name="name" value="{{Auth::user() -> name}}" />
                 </div>
                 <div class="form__error">
                     @error('name')
@@ -50,14 +50,14 @@
         <!-- 郵便番号 -->
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">郵便番号</h4>
+                <h2 class="form__label--item">郵便番号</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     @isset($profile)
-                    <input type="text" id="post_code" name="post_code" pattern="\d{3}-\d{4}" value="{{$profile['post_code']}}" />
+                    <input class="text" type="text" id="post_code" name="post_code" pattern="\d{3}-\d{4}" value="{{$profile['post_code']}}" />
                     @else
-                    <input type="text" id="post_code" name="post_code" pattern="\d{3}-\d{4}" value="{{old('post_code')}}" />
+                    <input class="text" type="text" id="post_code" name="post_code" pattern="\d{3}-\d{4}" value="{{old('post_code')}}" />
                     @endisset
                 </div>
                 <div class="form__error">
@@ -70,14 +70,14 @@
         <!-- 住所 -->
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">住所</h4>
+                <h2 class="form__label--item">住所</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     @isset($profile)
-                    <input type="text" id="address" name="address" value="{{$profile['address']}}" />
+                    <input class="text" type="text" id="address" name="address" value="{{$profile['address']}}" />
                     @else
-                    <input type="text" id="address" name="address" value="{{old('address')}}"  />
+                    <input class="text" type="text" id="address" name="address" value="{{old('address')}}"  />
                     @endisset
                 </div>
                 <div class="form__error">
@@ -90,14 +90,14 @@
         <!-- 建物名 -->
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">建物名</h4>
+                <h2 class="form__label--item">建物名</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     @isset($profile)
-                    <input type="text" id="building" name="building" value="{{$profile['building']}}" />
+                    <input class="text" type="text" id="building" name="building" value="{{$profile['building']}}" />
                     @else
-                    <input type="text" id="building" name="building" value="{{old('building')}}"  />
+                    <input class="text" type="text" id="building" name="building" value="{{old('building')}}"  />
                     @endisset
                 </div>
             </div>

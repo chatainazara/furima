@@ -11,8 +11,7 @@
     <div class="profile__group">
         <div class="profile__inner">
             <div class="profile__img">
-
-                <img class="profile__img--item" src="{{asset($profile['pict_url'])}}" alt=""/>
+                <img class="profile__img--item" src="{{asset($profile->pict_url ?? '')}}" alt=""/>
             </div>
             <div class="profile__name">
                 <p class="profile__name--text">{{$user['name']}}</p>

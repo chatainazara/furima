@@ -18,7 +18,7 @@ class PurchaseController extends Controller
         $payment = $request -> query('payment');
         $search = '';
 
-        return view('auth.buy',compact('item','user','payment','search',));
+        return view('auth.purchase',compact('item','user','payment','search',));
     }
 
     public function destinationInput(Request $request,$item_id){
@@ -35,18 +35,6 @@ class PurchaseController extends Controller
         $destination_post_code = $request -> destination_post_code;
         $destination_address = $request -> destination_address;
         $destination_building = $request -> destination_building;
-        return view('auth.buy',compact('item','user','payment','search','destination_post_code','destination_address','destination_building'));
-    }
-
-    public function purchase(PurchaseRequest $request){
-        Buy::create([
-            'user_id' => Auth::id(),
-            'item_id' => $request->item_id,
-            'payment' => $request->payment,
-            'destination_post_code' => $request->destination_post_code,
-            'destination_address' =>  $request->destination_address,
-            'destination_building' =>  $request->destination_building,
-        ]);
-        return redirect('/');
+        return view('auth.purchase',compact('item','user','payment','search','destination_post_code','destination_address','destination_building'));
     }
 }

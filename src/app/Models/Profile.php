@@ -16,5 +16,4 @@ class Profile extends Model
         'address',
         'building',
     ];
-
 }

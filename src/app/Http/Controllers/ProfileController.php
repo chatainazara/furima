@@ -52,8 +52,8 @@ class ProfileController extends Controller
         if($tab == 'buy'){
             $user = User::find(Auth::id());
             $profile = Profile::where('user_id',Auth::id())->first();
-            $buy_id = Buy::where('user_id',Auth::id())->pluck('item_id')->toArray();
-            $items = Item::whereIn('id',$buy_id)->get();
+            $buyId = Buy::where('user_id',Auth::id())->pluck('item_id')->toArray();
+            $items = Item::whereIn('id',$buyId)->get();
             return view('auth.profile',['profile' => $profile,'user'=>$user,'items' => $items,'search'=>$request->search,'buys' => $buys]);
         }else{
             $user = User::find(Auth::id());

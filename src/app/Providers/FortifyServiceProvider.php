@@ -16,6 +16,7 @@ use Laravel\Fortify\Fortify;
     use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
     use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Route;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -29,21 +30,31 @@ class FortifyServiceProvider extends ServiceProvider
         {
             return redirect('/login');
         }
-    });
+        });
 
-    $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-        public function toResponse($request)
-        {
-            return redirect('/');
-        }
-    });
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request)
+            {
+                $user = $request->user();
+                if ($user && is_null($user->email_verified_at)) {
+                    // 未認証ユーザーはメール認証ページへ
+                    return redirect()->route('verification.notice')
+                        ->with('message', 'メール認証が必要です。メールを確認してください。');
+                }
+                // 認証済みユーザーはホーム画面へ
+                return redirect('/');
+            }
+        });
 
-    $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
-        public function toResponse($request)
-        {
-            return redirect('/mypage/profile');
-        }
-    });
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+            public function toResponse($request)
+            {
+                 // 登録直後フラグをセッションにセット
+                session(['just_registered' => true]);
+                return redirect()->route('verification.notice')
+                        ->with('status', '登録ありがとうございます。メール認証を完了してください。');
+            }
+        });
     }
 
     /**

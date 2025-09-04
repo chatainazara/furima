@@ -19,7 +19,6 @@ class ItemFactory extends Factory
     public function definition()
     {
         $statuses = ['良好', '目立った傷や汚れなし', 'やや傷や汚れあり','状態が悪い'];
-
         return [
             'user_id'=> User::factory(),
             'name' => $this->faker->unique()->text(20),
@@ -36,17 +35,14 @@ class ItemFactory extends Factory
         return $this->afterCreating(function(Item $item){
             // ストレージを偽装（テスト用）
             Storage::fake('public');
-
             // ランダムな画像を生成して保存
             $file = UploadedFile::fake()->image('test.jpg');
             $filename = 'item'.$item->id.'.'.$file->getClientOriginalExtension();
             // 実際に保存するときは下記のコメントアウトを外す
             // $file->storeAs('public', $filename);
-
             // URL を設定
             $item->pict_url = 'storage/'.$filename;
             $item->save();
-
             // カテゴリをランダムで付与
             $count = Category::count();
             if($count > 0){
