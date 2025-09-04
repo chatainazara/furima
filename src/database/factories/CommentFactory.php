@@ -16,24 +16,24 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-        $user_ids = User::pluck('id')->all();
-        $item_ids = Item::select('id','user_id')->get()->toArray();
+        $userIds = User::pluck('id')->all();
+        $itemIds = Item::select('id','user_id')->get()->toArray();
         $id=1;
-        foreach($user_ids as $user_id){
-            foreach($item_ids as $item_id){
-                $mix[] = ['id'=>$id,'user_id'=>$user_id,'item_id'=>$item_id['id']];
+        foreach($userIds as $userId){
+            foreach($itemIds as $itemId){
+                $mix[] = ['id'=>$id,'user_id'=>$userId,'item_id'=>$itemId['id']];
                 $id++;
             }
         }
         $count = count($mix);
-        $fake_id = $this->faker->numberBetween(1,$count);
-        $key = array_search($fake_id, array_column($mix, "id"));
-        $userid = $mix[$key]['user_id'];
-        $itemid = $mix[$key]['item_id'];
+        $fakeId = $this->faker->numberBetween(1,$count);
+        $key = array_search($fakeId, array_column($mix, "id"));
+        $userId = $mix[$key]['user_id'];
+        $itemId = $mix[$key]['item_id'];
 
         return [
-            'user_id' => $userid,
-            'item_id' => $itemid,
+            'user_id' => $userId,
+            'item_id' => $itemId,
             'content' => $this->faker->sentence(),
         ];
     }

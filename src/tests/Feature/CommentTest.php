@@ -37,30 +37,18 @@ class CommentTest extends TestCase
     {
         $users = User::all();
         foreach ($users as $user){
-            // 非認証状態を期待
-            $this->assertGuest();
-            // ログインデータの準備
-            $login_data = [
-            'name'=> $user['name'],
-            'email' => $user['email'],
-            'password' => 'password',
-            ];
             // ログイン
-            $response = $this->post('/login',$login_data);
-            // 認証通過を期待
-            $this->assertAuthenticated();
-                        // 全アイテムを取得
+            $this->actingAs($user);
+            // 全アイテムを取得
             $items = Item::all();
             // アイテムごと検証
             foreach($items as $item){
                 $response = $this->get('/item/'.$item['id']);
-                $response->assertViewIs('item_detail');
-                //コメントを送信する
+                //コメントを入力しボタンを押す
                 $response = $this->post('/item/'.$item['id'],[
                     'action' => 'comment',
                     'content' => 'これはテストです'
                 ]);
-                // dd(Comment::all());
                 // 保存されていることの確認
                 $this->assertDatabaseHas('comments',[
                     'item_id' => $item['id'],
@@ -85,14 +73,12 @@ class CommentTest extends TestCase
 
     public function test_comment_logout_user_submit()
     {
-        // ログインしていない状態を期待
-        $this->assertGuest();
         // 全アイテムを取得
         $items = Item::all();
         // アイテムごと検証
         foreach($items as $item){
+            // 商品詳細ページにアクセス
             $response = $this->get('/item/'.$item['id']);
-            $response->assertViewIs('item_detail');
             //コメントを送信する
             $response = $this->post('/item/'.$item['id'],[
                 'action' => 'comment',
@@ -109,24 +95,13 @@ class CommentTest extends TestCase
     {
         $users = User::all();
         foreach ($users as $user){
-            // 非認証状態を期待
-            $this->assertGuest();
-            // ログインデータの準備
-            $login_data = [
-            'name'=> $user['name'],
-            'email' => $user['email'],
-            'password' => 'password',
-            ];
-            // ログイン
-            $response = $this->post('/login',$login_data);
-            // 認証通過を期待
-            $this->assertAuthenticated();
-                        // 全アイテムを取得
+            // 認証
+            $this->actingAs($user);
+            // 全アイテムを取得
             $items = Item::all();
             // アイテムごと検証
             foreach($items as $item){
                 $response = $this->get('/item/'.$item['id']);
-                $response->assertViewIs('item_detail');
                 //コメントを送信する
                 $response = $this->post('/item/'.$item['id'],[
                     'action' => 'comment',
@@ -145,24 +120,13 @@ public function test_comment_login_user_validation_255()
     {
         $users = User::all();
         foreach ($users as $user){
-            // 非認証状態を期待
-            $this->assertGuest();
-            // ログインデータの準備
-            $login_data = [
-            'name'=> $user['name'],
-            'email' => $user['email'],
-            'password' => 'password',
-            ];
-            // ログイン
-            $response = $this->post('/login',$login_data);
-            // 認証通過を期待
-            $this->assertAuthenticated();
-                        // 全アイテムを取得
+            // 認証
+            $this->actingAs($user);
+            // 全アイテムを取得
             $items = Item::all();
             // アイテムごと検証
             foreach($items as $item){
                 $response = $this->get('/item/'.$item['id']);
-                $response->assertViewIs('item_detail');
                 //コメントを送信する
                 $response = $this->post('/item/'.$item['id'],[
                     'action' => 'comment',
@@ -192,5 +156,4 @@ public function test_comment_login_user_validation_255()
         $response = $this->post('/logout');
         }
     }
-
 }

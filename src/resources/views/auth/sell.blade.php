@@ -7,7 +7,7 @@
 @section('content')
 <div class="content">
     <div class="content__top">
-        <h2 class="content__top--title">商品の出品</h2>
+        <h1 class="content__top--title">商品の出品</h1>
     </div>
 
     <form class="form" action="/sell" method="post"  enctype="multipart/form-data" novalidate>
@@ -15,9 +15,9 @@
         <div>
             <!-- 商品画像の選択 -->
             <div class="form__group">
-                    <h4 class="form__label--item">
+                    <h3 class="form__label--item">
                         商品画像
-                    </h4>
+                    </h3>
                     <div class="form__input--img">
                         <input class="form__input--button" type="file" name="pict_url" accept="image/png,image/jpeg" >
                     </div>
@@ -30,17 +30,26 @@
 
             <!-- 商品の詳細 -->
             <div class="form__group">
-            <h3 class="form__group-title">商品の詳細</h3>
+            <h3 class="form__sub-title">商品の詳細</h3>
                 <!-- カテゴリー -->
                 <div class="form__group-inner">
                     <div class="form__group-title">
-                        <h4 class="form__label--item">カテゴリー</h4>
+                        <h3 class="form__label--item">カテゴリー</h3>
                     </div>
                     <div class="form__group-content">
                         <div class="form__input--cate">
                             @foreach($categories as $category)
-                            <input class="form__input--cate-checkbox" type="checkbox" name="categories[{{$category['id']}}]" id="{{$category['content']}}" value="{{$category['id']}}" @if(old("categories.$category[id]") == $category['id']) checked @endif/>
-                            <label class="form__input--cate-label" for="{{$category['content']}}">{{$category['content']}}</label>
+                                <input
+                                    class="form__input--cate-checkbox"
+                                    type="checkbox"
+                                    name="categories[]"
+                                    id="category-{{ $category['id'] }}"
+                                    value="{{ $category['id'] }}"
+                                    @if(is_array(old('categories')) && in_array($category['id'], old('categories'))) checked @endif
+                                />
+                                <label class="form__input--cate-label" for="category-{{ $category['id'] }}">
+                                    {{ $category['content'] }}
+                                </label>
                             @endforeach
                         </div>
                         <div class="form__error">
@@ -53,16 +62,18 @@
                 <!-- 商品の状態 -->
                 <div class="form__group">
                     <div class="form__group-title">
-                        <h4 class="form__label--item">商品の状態</h4>
+                        <h3 class="form__label--item">商品の状態</h3>
                     </div>
                     <div class="form__group-content">
-                        <select class="form__input--select" name="condition" required>
-                            <option value="" disabled selected>選択してください</option>
-                            <option value="良好" @if( old('condition') === '良好' ) selected @endif>良好</option>
-                            <option value="目立った傷や汚れなし" @if( old('condition') === '目立った傷や汚れなし' ) selected @endif>目立った傷や汚れなし</option>
-                            <option value="やや傷や汚れあり" @if( old('condition') === 'やや傷や汚れあり' ) selected @endif>やや傷や汚れあり</option>
-                            <option value="状態が悪い" @if( old('condition') === '状態が悪い' ) selected @endif>状態が悪い</option>
-                        </select>
+                        <div class="form__input--select-wrapper">
+                            <select class="form__input--select" name="condition" required>
+                                <option value="" disabled selected>選択してください</option>
+                                <option value="良好" @if( old('condition') === '良好' ) selected @endif>良好</option>
+                                <option value="目立った傷や汚れなし" @if( old('condition') === '目立った傷や汚れなし' ) selected @endif>目立った傷や汚れなし</option>
+                                <option value="やや傷や汚れあり" @if( old('condition') === 'やや傷や汚れあり' ) selected @endif>やや傷や汚れあり</option>
+                                <option value="状態が悪い" @if( old('condition') === '状態が悪い' ) selected @endif>状態が悪い</option>
+                            </select>
+                        </div>
                         <div class="form__error">
                             @error('condition')
                             {{ $message }}
@@ -74,11 +85,11 @@
 
             <!-- 商品名と説明 -->
             <div class="form__group">
-            <h3 class="form__group-title">商品名と説明</h3>
+            <h2 class="form__sub-title">商品名と説明</h2>
                 <!-- 商品名 -->
                 <div class="form__group-inner">
                     <div class="form__group-title">
-                        <h4 class="form__label--item">商品名</h4>
+                        <h3 class="form__label--item">商品名</h3>
                     </div>
                     <div class="form__group-content">
                         <div class="form__input--text">
@@ -94,7 +105,7 @@
                 <!-- ブランド名 -->
                 <div class="form__group">
                     <div class="form__group-title">
-                        <h4 class="form__label--item">ブランド名</h4>
+                        <h3 class="form__label--item">ブランド名</h3>
                     </div>
                     <div class="form__group-content">
                         <div class="form__input--text">
@@ -108,7 +119,7 @@
                 <!-- 商品の説明 -->
                 <div class="form__group">
                     <div class="form__group-title">
-                        <h4 class="form__label--item">商品の説明</h4>
+                        <h3 class="form__label--item">商品の説明</h3>
                     </div>
                     <div class="form__group-content">
                         <div class="form__input--text">
@@ -124,11 +135,11 @@
                 <!-- 価格 -->
                 <div class="form__group">
                     <div class="form__group-title">
-                        <h4 class="form__label--item">価格</h4>
+                        <h3 class="form__label--item">価格</h3>
                     </div>
                     <div class="form__group-content">
                         <div class="form__input--text">
-                            <input type="text" name="price" value="{{old('price')}}" placeholder="¥" />
+                            <input type="text" name="price" value="{{old('price')}}" />
                         </div>
                         <div class="form__error">
                             @error('price')

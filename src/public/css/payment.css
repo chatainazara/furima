@@ -1,0 +1,53 @@
+.content{
+    display:block;
+    margin:0 auto;
+    align-items: center;
+    width:50%;
+    text-align: center;
+    margin-top:10%;
+}
+
+.title{
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.price{
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    margin:40px 0;
+}
+
+.payment__form{
+    display:block;
+}
+
+.payment__card {
+    width: 400px;
+    padding: 12px;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.payment__form--button {
+    margin-top: 60px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #FF5555;
+    color: white;
+    cursor: pointer;
+}
+
+.payment__form--button:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+}

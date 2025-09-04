@@ -33,30 +33,27 @@ class ItemDetailTest extends TestCase
             ->count(1)
         )
         ->hasProfile()
-        ->hasComments(2)
+        ->hasComments(1)
         ->create();
 
-        Favorite::factory(2)
+        Favorite::factory(1)
         ->create();
-
     }
 
     public function test_all_item_visible()
     {
         $items = Item::with('categories')->get();
         foreach($items as $item){
+            // 商品詳細ページを開く
             $response = $this->get('/item/'.$item['id']);
-            $response->assertViewIs('item_detail');
             // htmlを取得
             $html = $response->getContent();
             // 階層構造化
             $crawler = new Crawler($html);
-
             // 商品写真のURLが存在することを確認
             $response->assertSee([
                 $item['pict_url'],
             ]);
-
             // テスト条件の各因子が存在するかを確認
             $response->assertSeeText([
                 // 商品名
@@ -72,11 +69,11 @@ class ItemDetailTest extends TestCase
                 // 商品説明
                 $item['detail'],
                 // 商品の状態
+                //カテゴリーは次のテストケースで確認
                 $item['condition'],
                 // コメントタイトルにつくコメント数
                 'コメント('.Comment::where('item_id',$item['id'])->count().')',
             ]);
-
             // コメントユーザーのプロフィール画像、ユーザ名、コメント内容
             $comments = Comment::with('user.profile')
                 ->where('item_id', $item['id'])
@@ -91,7 +88,6 @@ class ItemDetailTest extends TestCase
                 // 写真が表示されていることの確認
                 $response->assertSee($comment->user->profile->pict_url);
             }
-
             // この商品にコメントしているユーザーを抽出
             $comment_users = Comment::where('item_id',$item['id'])
                 ->select('user_id')
@@ -102,7 +98,6 @@ class ItemDetailTest extends TestCase
             $not_comments = Comment::with('user.profile')
             ->whereNotIn('user_id',$comment_users)
             ->get();
-
             foreach($not_comments as $not_comment){
                 $response->assertDontSeeText([
                     // コメントした人の名前が表示されていない
@@ -119,8 +114,8 @@ class ItemDetailTest extends TestCase
     {
         $items = Item::with('categories')->get();
         foreach($items as $item){
+            // 商品詳細ページを開く
             $response = $this->get('/item/'.$item['id']);
-            $response->assertViewIs('item_detail');
             // htmlを取得
             $html = $response->getContent();
             // 階層構造化

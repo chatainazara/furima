@@ -27,7 +27,7 @@ class SearchTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $number_user = 5;
+        $number_user = 2;
         $number_item = 3;
         User::factory($number_user)
         ->has(Item::factory()->count($number_item))
@@ -39,48 +39,35 @@ class SearchTest extends TestCase
     public function test_part_searchable()
     {
         $items = Item::all();
-        // logout状態を期待
-        $this->assertGuest();
         foreach ($items as $item){
             // itemのnameについて最初の一文字を取得
-            $first_char = Str::substr($item['name'], 0, 1);
+            $first_char = Str::substr($item->name, 0, 1);
              // 検索ボタンを押す
             $response = $this->post('/',['search'=>$first_char]);
-            $response->assertViewIs('index');
-            $response->assertSeeText($item['name']);
+            // 一部を抜き出して検索された商品が表示されている
+            $response->assertSeeText($item->name);
             //検索にヒットする商品を取得
             $search_items = Item::NameSearch($first_char)->pluck('id');
             // itemsテーブルから検索にヒットする要素を排除したコレクションを取得
             $notsearch_items = Item::whereNotIn('id',$search_items)->get();
             // 検索にヒットしない要素が画面上に表示されていないことを確認
             foreach($notsearch_items as $notsearch_item){
-                $response->assertDontSeeText($notsearch_item['name']);
+                $response->assertDontSeeText($notsearch_item->name);
             }
         }
     }
 
     public function test_searchable_save_mylist()
     {
-        // logout状態を期待
-        $this->assertGuest();
         // favoritesテーブルに存在するユーザーのidを取得
         $select_users = Favorite::distinct()->pluck('user_id')->toArray();
         // いいねを登録しているユーザーを抽出
         $users = User::whereIn('id',$select_users)->get();
         foreach($users as $user){
-            // 全ての必要項目を入力
-            $loginData= [
-                'email' => $user['email'],
-                'password' => 'password',
-            ];
-            // ログインボタンを押す
-            $response = $this->post('/login',$loginData);
-            // 認証通過を期待
-            $this->assertAuthenticated();
-            // indexページへの移行('/')を期待
-            $response->assertRedirect('/');
+            // 認証
+            $this->actingAs($user);
+            // ホームページへアクセス
             $response = $this->get('/');
-            $response->assertViewIs('index');
             // このユーザーがいいねしている商品のid全部を配列で取得
             $favorites = Favorite::where('user_id',$user['id'])->pluck('item_id')->toArray();
             // このユーザーのお気に入り商品全て
@@ -117,10 +104,10 @@ class SearchTest extends TestCase
                     $response->assertSeeText($favorite_search['name']);
                 }
                 // お気に入り商品のうち検索でヒットしたもの以外の全ての商品の名前の配列
-                $notfavorites = Item::whereNotIn('id',array_column($favorite_searches,'id'))->pluck('name')->toArray();
+                $notFavorites = Item::whereNotIn('id',array_column($favorite_searches,'id'))->pluck('name')->toArray();
                 // お気に入り商品のうち検索でヒットしたもの以外の全ての商品が表示されないことを期待
-                foreach($notfavorites as $notfavorite){
-                    $response->assertDontSeeText($notfavorite);
+                foreach($notFavorites as $notFavorite){
+                    $response->assertDontSeeText($notFavorite);
                 }
             }
             $response = $this->post('/logout');

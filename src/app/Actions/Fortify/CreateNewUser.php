@@ -21,7 +21,6 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         $input = \App::make(RegisterRequest::class);
-        
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],

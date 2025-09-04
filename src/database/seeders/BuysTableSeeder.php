@@ -26,7 +26,7 @@ class BuysTableSeeder extends Seeder
         $param = [
             'item_id' => 3,
             'user_id' => 6,
-            'payment' => 'convenience',
+            'payment' => 'konbini',
             'destination_post_code' => '222-2222',
             'destination_address' => '北海道浜頓別村0-0-0',
             'destination_building' => 'リキッダビルディング1202',

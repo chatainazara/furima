@@ -12,7 +12,7 @@ class CategoryItemTableSeeder extends Seeder
      *
      * @return void
      */
-       public function run()
+    public function run()
     {
         $param = [
             'item_id' => 1,

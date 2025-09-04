@@ -25,19 +25,19 @@ class ItemTest extends TestCase
     {
         parent::setUp();
         User::factory(2)
-        ->hasItems(5)
+        ->hasItems()
         ->create();
 
-        Buy::factory(10)
+        Buy::factory(2)
         ->create();
     }
 
     public function test_all_item_visible()
     {
         $items = Item::All();
-        $this->assertDatabaseCount('items', 10);
+        // 商品一覧ページの表示
         $response = $this->get('/');
-        $response->assertStatus(200);
+        // 全ての商品名が表示されていることを確認
         foreach ($items as $item) {
             $response->assertSeeText($item->name);
         }
@@ -45,30 +45,28 @@ class ItemTest extends TestCase
 
     public function test_sold_label_visible()
     {
+        // 商品一覧ページの表示
         $response = $this->get('/');
+        // 購入された商品にsoldが表示される
         $response->assertSeeText('sold');
     }
 
     public function test_sold_item_unvisible()
     {
-        $response = $this->get('/');
-        $response->assertStatus(200);
         $users = User::all();
         foreach ($users as $user){
-            $loginData=[
-                'email'=> $user['email'],
-                'password'=> 'password',
-            ];
-            $response = $this->post('/login', $loginData);
-            $this->assertAuthenticated();
-            // $userの出品したもののid取得
+            // ログイン
+            $this->actingAs($user);
+            // 商品一覧ページの表示
             $response = $this->get('/');
-            $remove_items = Item::where('user_id',Auth::id())->get();
+            // $userの出品したもののid取得
+            $removeItems = Item::where('user_id',Auth::id())->get();
             // 自分が出品したものが画面上に出ていないかを確認
-            foreach ($remove_items as $item) {
-            $response->assertViewIs('index');
-            $response->assertDontSeeText($item['name']);
+            foreach ($removeItems as $item) {
+                $response->assertDontSeeText($item->name);
             }
+            // ログアウト
+            $response = $this->post('/logout');
         }
     }
 

@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/item_detail.css') }}">
 @endsection
 
+    @php
+    $user = auth()->user();
+    @endphp
+
 @section('content')
 <div class="content">
     <!-- 商品画像 -->
@@ -14,7 +18,7 @@
     <!-- その他の情報 -->
     <div class="content-inner">
         <div class="content__title">
-            <h2 class="content__title-text">{{$item['name']}}</h2>
+            <h1 class="content__title-text">{{$item['name']}}</h1>
         </div>
         <div class="content__brand">
             <p class="content__brand-name">{{$item['brand_name']}}</p>
@@ -27,7 +31,7 @@
 
         <div class="content__react">
             <div class="content__react-part">
-                @if(Auth::check())
+                @if(!is_null($user) && !is_null($user->email_verified_at))
                 <form class="content__react-icon" action="/item/{{$item['id']}}" method="post">
                     @csrf
                     @if($favorite == "favorite")
@@ -53,7 +57,7 @@
             </div>
 
             <div class="content__react-part">
-                @if(Auth::check())
+                @if(!is_null($user) && !is_null($user->email_verified_at))
                 <div class="content__react-icon">
                     @if($comment == "comment")
                     <div class="content__react-icon--inner">
@@ -87,13 +91,13 @@
         @endif
 
         <div class="content__sub-title">
-            <h3 class="content__sub-title--text">商品説明</h3>
+            <h2 class="content__sub-title--text">商品説明</h2>
         </div>
         <div class="content__detail">
             <p class="content__detail--text">{{$item['detail']}}</p>
         </div>
         <div class="content__sub-title">
-            <h3 class="content__sub-title--text">商品の情報</h3>
+            <h2 class="content__sub-title--text">商品の情報</h2>
         </div>
         <div class="content__info">
             <div class="content__info--title">カテゴリー</div>
@@ -115,7 +119,7 @@
         </div>
         <div class="content__comment">
             <div class="content__comment-title">
-                <h3 class="content__comment-title--text">コメント({{$comments_count}})<h3>
+                <h2 class="content__comment-title--text">コメント({{$comments_count}})<h3>
             </div>
             @foreach($comments as $comment)
             <div class="content__comment-content">

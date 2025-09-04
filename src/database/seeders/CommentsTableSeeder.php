@@ -44,5 +44,17 @@ class CommentsTableSeeder extends Seeder
             'content' => '注文後何日で出荷いただけますか'
         ];
         DB::table('comments')->insert($param);
+        $param = [
+            'item_id' => 3,
+            'user_id' => 6,
+            'content' => '4束に見えるのですが出品は3束ですか'
+        ];
+        DB::table('comments')->insert($param);
+        $param = [
+            'item_id' => 3,
+            'user_id' => 2,
+            'content' => '4束ですタイトルの間違えです'
+        ];
+        DB::table('comments')->insert($param);
     }
 }

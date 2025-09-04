@@ -27,34 +27,27 @@ class SellTest extends TestCase
         parent::setUp();
         $user_number = 2;
         $this->artisan('db:seed', ['--class' => 'CategoriesTableSeeder']);
-        User::factory($user_number)->create();
+        User::factory($user_number)
+        ->hasProfile()
+        ->create();
     }
 
     public function test_database_has()
     {
         // 一人づつ出品する商品数
-        $item_number = 3;
-        // ログアウト状態を確認
-        $this->assertGuest();
+        $item_number = 1;
         // ログインする
         $users = User::all();
         // ユーザー一人ずつ検証
         foreach($users as $user){
-            $loginData= [
-                'email' => $user->email,
-                'password' => 'password',
-                ];
-            // ログインボタンを押す
-            $response = $this->post('/login',$loginData);
-            // 認証通過を期待
-            $this->assertAuthenticated();
+            // ログイン
+            $this->actingAs($user);
             // 出品画面に移行
             $response = $this->get('/sell');
             $response->assertViewIs('auth.sell');
-            // 出品内容をコントローラーにポスト
+            // 出品内容のインスタンスを作成
             $items=Item::factory($item_number)->make([
                 'user_id'=> Auth::id(),
-                'sold' => 0
             ]);
             // 商品ひとつずつ検証
             foreach($items as $item){
@@ -65,7 +58,7 @@ class SellTest extends TestCase
                 Storage::Fake('public');
                 // 画像データを生成
                 $file = UploadedFile::fake()->image('test.jpg');
-                // データをポスト送信
+                // 商品を出品
                 $data = [
                     'categories' => $categories,
                     'condition' => $item['condition'],
@@ -100,6 +93,7 @@ class SellTest extends TestCase
                     ]);
                 }
             }
+            $response = $this->post('/logout');
         }
     }
 }

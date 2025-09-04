@@ -30,10 +30,10 @@ class ProfileTest extends TestCase
         parent::setUp();
         User::factory(2)
         ->has(Profile::factory())
-        ->has(Item::factory()->count(10))
+        ->has(Item::factory()->count(1))
         ->create();
 
-        Buy::factory(3)
+        Buy::factory(2)
         ->create();
 
     }
@@ -41,20 +41,11 @@ class ProfileTest extends TestCase
     public function test_profile_visible()
     {
         $profiles = Profile::all();
-        // ログアウト状態を確認
-        $this->assertGuest();
-        // ログインする
         $users = User::all();
         // ユーザー一人ずつ検証
         foreach($users as $user){
-                $loginData= [
-                'email' => $user->email,
-                'password' => 'password',
-                ];
-            // ログインボタンを押す
-            $response = $this->post('/login',$loginData);
-            // 認証通過を期待
-            $this->assertAuthenticated();
+            // ログイン
+            $this->actingAs($user);
             // プロフィール画面にアクセス
             $response = $this->get('/mypage');
             // プロフィール画面の表示を確認

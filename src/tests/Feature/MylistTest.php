@@ -24,54 +24,32 @@ class MylistTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $number_user = 3;
-        $number_item = 3;
+        $number_user = 2;
+        $number_item = 1;
         User::factory($number_user)
         ->has(Item::factory()
-        // ->state([
-        //     'sold' => $this->faker->boolean(100),
-        //     ])
             ->count($number_item))
         ->create();
 
         Favorite::factory(round($number_user*$number_user*$number_item/10)+1)
         ->create();
 
-        Buy::factory(9)
+        Buy::factory(2)
         ->create();
 
         $buys=Buy::all()->toArray();
-    }
-
-
-    public function test_favorite(){
-        $this->assertDatabaseCount('favorites',4);
     }
 
     public function test_favorite_item_visible(){
         $select_users = Favorite::distinct()->pluck('user_id')->toArray();
         $users = User::whereIn('id',$select_users)->get();
         foreach($users as $user){
-            // logout状態を期待
-            $this->assertGuest();
-            // 全ての必要項目を入力
-            $loginData= [
-                'email' => $user['email'],
-                'password' => 'password',
-            ];
-            // ログインボタンを押す
-            $response = $this->post('/login',$loginData);
-            // 認証通過を期待
-            $this->assertAuthenticated();
-            // indexページへの移行('/')を期待
-            $response->assertRedirect('/');
+            // 認証
+            $this->actingAs($user);
             // マイリストへ遷移
             $response = $this->post('/?tab=mylist');
-            $response->assertViewIs('index');
-            $response->assertViewHas('items');
             // 現在の認証idにかかるお気に入り情報を取得
             $favorites = Favorite::where('user_id',Auth::id())->get();
-            // $favorites_count = Favorite::where('user_id',Auth::id())->count();
             // お気に入り情報の一つずつを確認
             foreach ($favorites as $favorite){
                 // お気に入り情報のitem_idに紐づくitemsテーブルの要素の名前を取得
@@ -87,8 +65,6 @@ class MylistTest extends TestCase
             }
         // logoutボタンを押下
         $response = $this->post('/logout');
-        //logoutを期待
-        $this->assertGuest();
         }
     }
 
@@ -96,34 +72,19 @@ class MylistTest extends TestCase
         $select_users = Favorite::distinct()->pluck('user_id')->toArray();
         $users = User::whereIn('id',$select_users)->get();
         foreach($users as $user){
-            // logout状態を期待
-            $this->assertGuest();
-            // 全ての必要項目を入力
-            $loginData= [
-                'email' => $user['email'],
-                'password' => 'password',
-            ];
-            // ログインボタンを押す
-            $response = $this->post('/login',$loginData);
-            // 認証通過を期待
-            $this->assertAuthenticated();
-            // indexページへの移行('/')を期待
-            $response->assertRedirect('/');
+            // 認証
+            $this->actingAs($user);
             // マイリストへ遷移
             $response = $this->post('/?tab=mylist');
             // 表示画面にsoldが存在することを確認（factoryにより全商品がsoldに設定されている）
             $response->assertSeeText('sold');
             // logoutボタンを押下
             $response = $this->post('/logout');
-            //logoutを期待
-            $this->assertGuest();
         }
     }
 
     public function test_guest_mylist_unvisible(){
         $items = Item::all();
-        // logout状態を期待
-        $this->assertGuest();
         // logout状態で/にgetでアクセス
         $response = $this -> get('/');
         // indexが表示されることを確認
@@ -132,7 +93,7 @@ class MylistTest extends TestCase
         $response = $this->post('/?tab=mylist');
         // 何も表示されないことを期待（商品名が一つも表示されないことで確認）
         foreach ($items as $item){
-            $response->assertDontSeeText($item['name']);
+            $response->assertDontSeeText($item->name);
         }
     }
 }

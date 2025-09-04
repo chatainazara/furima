@@ -7,13 +7,13 @@
 @section('content')
 <div class="register-form__content">
     <div class="register-form__heading">
-        <h2 class="register-form__title">住所の変更</h2>
+        <h1 class="register-form__title">住所の変更</h1>
     </div>
     <form class="form" action="/purchase/address/{{$item_id}}?payment={{$payment}}" method="post" novalidate>
         @csrf
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">郵便番号</h4>
+                <h2 class="form__label--item">郵便番号</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
@@ -28,7 +28,7 @@
         </div>
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">住所</h4>
+                <h2 class="form__label--item">住所</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
@@ -43,7 +43,7 @@
         </div>
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">建物名</h4>
+                <h2 class="form__label--item">建物名</h2>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">

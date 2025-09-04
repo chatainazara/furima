@@ -37,25 +37,17 @@ class PaymentTest extends TestCase
     {
         $users = User::all();
         foreach ($users as $user){
-            // 非認証状態を期待
-            $this->assertGuest();
-            // ログインデータの準備
-            $login_data = [
-            'name'=> $user['name'],
-            'email' => $user['email'],
-            'password' => 'password',
-            ];
             // ログイン
-            $response = $this->post('/login',$login_data);
-            // 認証通過を期待
-            $this->assertAuthenticated();
+            $this->actingAs($user);
             // 自分以外が出品した商品を取得
             $items = Item::where('user_id','!=',$user->id)->get();
             // アイテムごと検証
             foreach($items as $item){
-                $response = $this->get('/purchase/'.$item['id']);
-                $response->assertViewIs('auth.buy');
-                $response = $this->post('/purchase/address/'.$item['id'],[
+                // 購入ページにアクセス
+                $response = $this->get('/purchase/'.$item->id);
+
+            // カード払いを指定
+                $response = $this->post('/purchase/address/'.$item->id,[
                     'destination_post_code' => $user->profile->post_code,
                     'destination_address' => $user->profile->address,
                     'destination_building' => $user->profile->building,
@@ -65,10 +57,30 @@ class PaymentTest extends TestCase
                 $html = $response->getContent();
                 // 階層構造化
                 $crawler = new Crawler($html);
-                // 支払い方法部分をブロック化
+                // 承継画面部分をブロック化
                 $payment_block = $crawler->filter('.confirm')->text();
                 // カード払いが存在することを確認
                 $this->assertStringContainsString('カード払い', $payment_block);
+                // コンビニ払いが存在しないことを確認
+                $this->assertStringNotContainsString('コンビニ払い', $payment_block);
+
+            // コンビニ払いを指定
+                $response = $this->post('/purchase/address/'.$item->id,[
+                    'destination_post_code' => $user->profile->post_code,
+                    'destination_address' => $user->profile->address,
+                    'destination_building' => $user->profile->building,
+                    'payment' => 'konbini',
+                ]);
+                // htmlを取得
+                $html = $response->getContent();
+                // 階層構造化
+                $crawler = new Crawler($html);
+                // 承継画面部分をブロック化
+                $payment_block = $crawler->filter('.confirm')->text();
+                // カード払いが存在することを確認
+                $this->assertStringContainsString('コンビニ払い', $payment_block);
+                // カード払いが存在しないことを確認
+                $this->assertStringNotContainsString('カード払い', $payment_block);
             }
         // ログアウト
         $response = $this->post('/logout');

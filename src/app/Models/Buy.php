@@ -18,6 +18,4 @@ class Buy extends Model
         'destination_address',
         'destination_building',
     ];
-
-    
 }

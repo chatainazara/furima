@@ -17,6 +17,10 @@
 </head>
 
 <body>
+    @php
+    $user = auth()->user();
+    @endphp
+
     <header class="header">
         <div class="header__inner">
             <div class="header-utilities">
@@ -25,7 +29,7 @@
                 </a>
                 <ul class="header-nav">
                     <!-- ログイン時 -->
-                    @if (Auth::check())
+                    @if(!is_null($user) && !is_null($user->email_verified_at))
                     <li class="header-nav__item-search">
                         <form class="header-nav__search" action='/' method='post'>
                             @csrf
@@ -48,9 +52,32 @@
                             <button class="header-nav__listing--button">出品</button>
                         </form>
                     </li>
-                    @endif
+                    <!-- ログイン未承認ユーザー -->
+                    @elseif(!is_null($user) && is_null($user->email_verified_at))
+                    <li class="header-nav__item-search">
+                        <form class="header-nav__search" action='/' method='post'>
+                            @csrf
+                            <input class="header-nav__search--window" type="text" name="search" placeholder="何かお探しですか？" value="{{$search}}"/>
+                            <button class="header-nav__search--button" type="submit">検索</button>
+                        </form>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/mypage">マイページ</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__logout" action="/logout" method="post">
+                            @csrf
+                            <button class="header-nav__logout--button">ログアウト</button>
+                        </form>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__listing" action="/sell" method="get">
+                            @csrf
+                            <button class="header-nav__listing--button">出品</button>
+                        </form>
+                    </li>
                     <!-- ログアウト時 -->
-                    @if (Auth::guest())
+                    @elseif(auth()->guest())
                     <li class="header-nav__item-search">
                         <form class="header-nav__search" action='/' method='post'>
                             @csrf

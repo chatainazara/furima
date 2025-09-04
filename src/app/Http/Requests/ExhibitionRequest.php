@@ -26,16 +26,11 @@ class ExhibitionRequest extends FormRequest
         $rules = [
             'name' => 'required',
             'pict_url' => 'required|mimes:jpeg,png',
-            'price' => 'required|integer|min:1',
+            'price' => 'required|integer|min:0',
             'detail' => 'required||max:255',
             'condition' =>'required',
             'categories' => 'required',
         ];
-
-        if (app()->runningUnitTests()) {
-            unset($rules['pict_url']);
-        }
-
         return $rules;
     }
 
@@ -47,7 +42,7 @@ class ExhibitionRequest extends FormRequest
             'pict_url.mimes' => 'jpeg,pngのフェイルを選択してください',
             'price.required' => '金額を入力してください',
             'price.integer' => '数字を入力してください',
-            'price.integer' => '1円以上の金額を入力してください',
+            'price.integer' => '0円以上の金額を入力してください',
             'detail.required' => '商品の説明を入力してください',
             'detail.max' => '255文字以内で入力してください',
             'condition.required' => '商品の状態を選択してください',

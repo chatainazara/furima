@@ -7,18 +7,16 @@
 @section('content')
 <div class="login-form__content">
     <div class="login-form__heading">
-        <h2 class="login-form__title">ログイン</h2>
+        <h1 class="login-form__title">ログイン</h1>
     </div>
     <form class="form" action="/login" method="post" novalidate>
         @csrf
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">メールアドレス</h4>
+                <h2 class="form__label--item">メールアドレス</h2>
             </div>
             <div class="form__group-content">
-                <div class="form__input--text">
-                    <input type="email" name="email" value="{{ old('email') }}" />
-                </div>
+                <input class="form__input--text" type="email" name="email" value="{{ old('email') }}" />
                 <div class="form__error">
                     @error('email')
                     {{ $message }}
@@ -28,12 +26,10 @@
         </div>
         <div class="form__group">
             <div class="form__group-title">
-                <h4 class="form__label--item">パスワード</>
+                <h2 class="form__label--item">パスワード</>
             </div>
             <div class="form__group-content">
-                <div class="form__input--text">
-                    <input type="password" name="password" />
-                </div>
+                <input class="form__input--text" type="password" name="password" />
                 <div class="form__error">
                     @error('password')
                     {{ $message }}

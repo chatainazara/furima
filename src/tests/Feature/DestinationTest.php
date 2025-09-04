@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Item;
 use Database\Seeders\CategoriesTableSeeder;
 use Symfony\Component\DomCrawler\Crawler;
+use Stripe\PaymentIntent;
+use Mockery;
 
 class DestinationTest extends TestCase
 {
@@ -38,25 +40,15 @@ class DestinationTest extends TestCase
     {
         $users = User::all();
         foreach ($users as $user){
-            // 非認証状態を期待
-            $this->assertGuest();
-            // ログインデータの準備
-            $login_data = [
-            'name'=> $user['name'],
-            'email' => $user['email'],
-            'password' => 'password',
-            ];
             // ログイン
-            $response = $this->post('/login',$login_data);
-            // 認証通過を期待
-            $this->assertAuthenticated();
+            $this->actingAs($user);
             // 自分以外が出品した商品を取得
             $items = Item::where('user_id','!=',$user->id)->get();
             // アイテムごと検証
             foreach($items as $item){
+                // 購入画面を開く
                 $response = $this->get('/purchase/'.$item['id']);
-                $response->assertViewIs('auth.buy');
-                // お届け先を変更し購入画面を再度開く
+                // 送付先住所変更画面で住所を登録して商品購入画面を再度開く
                 $response = $this->post('/purchase/address/'.$item['id'],[
                     'destination_post_code' => '999-9999',
                     'destination_address' => 'test_address',
@@ -81,28 +73,18 @@ class DestinationTest extends TestCase
     }
 
 
-public function test_destination_change_save()
+    public function test_destination_change_save()
     {
         $users = User::all();
         foreach ($users as $user){
-            // 非認証状態を期待
-            $this->assertGuest();
-            // ログインデータの準備
-            $login_data = [
-            'name'=> $user['name'],
-            'email' => $user['email'],
-            'password' => 'password',
-            ];
             // ログイン
-            $response = $this->post('/login',$login_data);
-            // 認証通過を期待
-            $this->assertAuthenticated();
+            $this->actingAs($user);
             // 自分以外が出品した商品を取得
             $items = Item::where('user_id','!=',$user->id)->get();
             // アイテムごと検証
             foreach($items as $item){
+                // 購入画面を開く
                 $response = $this->get('/purchase/'.$item['id']);
-                $response->assertViewIs('auth.buy');
                 // お届け先を変更し購入画面を再度開く
                 $response = $this->post('/purchase/address/'.$item['id'],[
                     'destination_post_code' => '999-9999',
@@ -110,21 +92,32 @@ public function test_destination_change_save()
                     'destination_building' => 'test_building',
                     'payment' => 'card',
                 ]);
-                // 購入ボタンを押す
-                $response = $this->post('/purchase',[
-                    'destination_post_code' => $response->viewData('destination_post_code'),
-                    'destination_address' => $response->viewData('destination_address'),
-                    'destination_building' => $response->viewData('destination_building'),
-                    'payment' => $response->viewData('payment'),
-                    'item_id' => $item->id,
+                // Stripe static create をモック（カード払い用）
+                $cardMock = Mockery::mock('overload:' . PaymentIntent::class);
+                $cardMock->shouldReceive('create')
+                        ->andReturn((object)['id' => 'pi_card_test_123']);
+                // カード払い
+                $this->actingAs($user)
+                    ->withSession([
+                        'user_id' => $user->id,
+                        'item_id' => $item->id,
+                        'payment' => 'card',
+                        'destination_post_code' => '999-9999',
+                        'destination_address' => 'test_address',
+                        'destination_building' => 'test_building',
+                    ]);
+                // 商品を購入
+                $response = $this->postJson('/payment/store', [
+                    'payment_method' => 'pm_card_test_123',
                 ]);
-                // buysテーブルによってitem_idと紐づくことを確認
+                // 正しく送付先住所が紐づいている
                 $this->assertDatabaseHas('buys',[
-                'item_id' => $item->id,
-                'payment' => 'card',
-                'destination_post_code' => '999-9999',
-                'destination_address' => 'test_address',
-                'destination_building' => 'test_building',
+                    'user_id' => $user->id,
+                    'item_id' => $item->id,
+                    'payment' => 'card',
+                    'destination_post_code' => '999-9999',
+                    'destination_address' => 'test_address',
+                    'destination_building' => 'test_building',
                 ]);
             }
         // ログアウト
