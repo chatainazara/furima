@@ -17,7 +17,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'name' => '腕時計',
-            'pict_url' => 'storage/item1.jpeg',
+            'pict_url' => 'storage/sample/item1.jpeg',
             'brand_name' => 'Rolax',
             'price' => 15000,
             'detail' => 'スタイリッシュなデザインのメンズ腕時計',
@@ -27,7 +27,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'name' => 'HDD',
-            'pict_url' => 'storage/item2.jpeg',
+            'pict_url' => 'storage/sample/item2.jpeg',
             'brand_name' => '西芝',
             'price' => 5000,
             'detail' => '高速で信頼性の高いハードディスク',
@@ -37,7 +37,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 2,
             'name' => '玉ねぎ3束',
-            'pict_url' => 'storage/item3.jpeg',
+            'pict_url' => 'storage/sample/item3.jpeg',
             'brand_name' => 'なし',
             'price' => 300,
             'detail' => '新鮮な玉ねぎ3束のセット',
@@ -47,7 +47,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 3,
             'name' => '革靴',
-            'pict_url' => 'storage/item4.jpeg',
+            'pict_url' => 'storage/sample/item4.jpeg',
             'brand_name' => '',
             'price' => 4000,
             'detail' => 'クラシックなデザインの革靴',
@@ -57,7 +57,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'name' => 'ノートPC',
-            'pict_url' => 'storage/item5.jpeg',
+            'pict_url' => 'storage/sample/item5.jpeg',
             'brand_name' => '',
             'price' => 45000,
             'detail' => '高性能なノートパソコン',
@@ -67,7 +67,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'name' => 'マイク',
-            'pict_url' => 'storage/item6.jpeg',
+            'pict_url' => 'storage/sample/item6.jpeg',
             'brand_name' => 'なし',
             'price' => 8000,
             'detail' => '高音質のレコーディング用マイク',
@@ -77,7 +77,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 3,
             'name' => 'ショルダーバッグ',
-            'pict_url' => 'storage/item7.jpeg',
+            'pict_url' => 'storage/sample/item7.jpeg',
             'brand_name' => '',
             'price' => 3500,
             'detail' => 'おしゃれなショルダーバッグ',
@@ -87,7 +87,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 3,
             'name' => 'タンブラー',
-            'pict_url' => 'storage/item8.jpeg',
+            'pict_url' => 'storage/sample/item8.jpeg',
             'brand_name' => 'なし',
             'price' => 500,
             'detail' => '使いやすいタンブラー',
@@ -97,7 +97,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 3,
             'name' => 'コーヒーミル',
-            'pict_url' => 'storage/item9.jpeg',
+            'pict_url' => 'storage/sample/item9.jpeg',
             'brand_name' => 'Starbacks',
             'price' => 4000,
             'detail' => '手動のコーヒーミル',
@@ -107,7 +107,7 @@ class ItemsTableSeeder extends Seeder
         $param = [
             'user_id' => 4,
             'name' => 'メイクセット',
-            'pict_url' => 'storage/item10.jpeg',
+            'pict_url' => 'storage/sample/item10.jpeg',
             'brand_name' => '',
             'price' => 2500,
             'detail' => '便利なメイクアップセット',
