@@ -13,7 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/docker/mysql/data
+../docker/mysql/data
 /storage/*
 !/storage/app/public
 /storage/app/public/*
