@@ -14,8 +14,3 @@
 /src/.idea
 /src/.vscode
 /docker/mysql/data
-/storage/*
-!/src/storage/app/public
-/src/storage/app/public/*
-!/src/storage/app/public/sample/
-!/src/storage/app/public/sample/**
