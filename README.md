@@ -17,24 +17,24 @@
 3. cp .env.example .env
 
 4. .env に以下の環境変数を追加または変更
-   DB_CONNECTION=mysql
-   DB_HOST=mysql
-   DB_PORT=3306
-   DB_DATABASE=laravel_db
-   DB_USERNAME=laravel_user
-   DB_PASSWORD=laravel_pass
+DB_CONNECTION=mysql  
+DB_HOST=mysql  
+DB_PORT=3306  
+DB_DATABASE=laravel_db  
+DB_USERNAME=laravel_user  
+DB_PASSWORD=laravel_pass  
 
-MAIL_MAILER=smtp
-MAIL_HOST=mailhog
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS="noreply@example.com"
-MAIL_FROM_NAME="${APP_NAME}"
+MAIL_MAILER=smtp  
+MAIL_HOST=mailhog  
+MAIL_PORT=1025  
+MAIL_USERNAME=null  
+MAIL_PASSWORD=null  
+MAIL_ENCRYPTION=null  
+MAIL_FROM_ADDRESS="noreply@example.com"  
+MAIL_FROM_NAME="${APP_NAME}"  
 
-STRIPE_KEY=pk_test_xxxxxxxxxxxxxxxxx（<-stripe の API キーをコピー）
-STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxx（<-stripe の API キーをコピー）
+STRIPE_KEY=pk_test_xxxxxxxxxxxxxxxxx（<-stripe の API キーをコピー）  
+STRIPE_SECRET=sk_test_xxxxxxxxxxxxxxxxx（<-stripe の API キーをコピー）  
 
 5. アプリケーションキーの作成
    php artisan key:generate
@@ -55,7 +55,17 @@ No 4242 4242 4242 4242
 
 ### テストの実行
 
-1. 本アプリのテストを一度に実行
+1. Mysqlコンテナに入る
+    docker-compose exec mysql bash
+
+2. MySQLコンテナ上
+    $ mysql -u root -p
+    パスワードを聞かれたら root
+
+3. テスト用データベースを作成
+    CREATE DATABASE demo_test;
+
+4. phpコンテナで本アプリのテストを一度に実行
    vendor/bin/phpunit tests/Feature
 
 ## 使用技術(実行環境)
