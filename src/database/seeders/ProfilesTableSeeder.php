@@ -16,7 +16,7 @@ class ProfilesTableSeeder extends Seeder
     {
         $param = [
             'user_id' => 1,
-            'pict_url' => 'storage/profile1.png',
+            'pict_url' => 'storage/sample/profile1.png',
             'post_code' => '000-0000',
             'address' => '北海道千歳町0-0-0',
             'building' => '蓮花ハイツC棟302',
@@ -32,7 +32,7 @@ class ProfilesTableSeeder extends Seeder
         DB::table('profiles')->insert($param);
         $param = [
             'user_id' => 3,
-            'pict_url' => 'storage/profile3.png',
+            'pict_url' => 'storage/sample/profile3.png',
             'post_code' => '000-0000',
             'address' => '北海道神居町0-0-0',
             'building' => 'オウレン荘105',
@@ -48,7 +48,7 @@ class ProfilesTableSeeder extends Seeder
         DB::table('profiles')->insert($param);
         $param = [
             'user_id' => 5,
-            'pict_url' => 'storage/profile5.png',
+            'pict_url' => 'storage/sample/profile5.png',
             'post_code' => '000-0000',
             'address' => '北海道音威子府区0-0-0',
             'building' => 'テーダスクエア231',
